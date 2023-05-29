@@ -1,0 +1,16 @@
+{
+  "name": "1-basic",
+  "version": "1.0.0",
+  "description": "This is a simple to multiply with a txt file",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "number8": "node app"
+  },
+  "author": "dean fdz",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^17.7.2"
+  }
+}
