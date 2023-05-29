@@ -6,6 +6,12 @@ const argv = require('yargs')
                     type:'number',
                     demandOption: true,
                 })
+                .option('l', {
+                    alias: 'list',
+                    type:'boolean',
+                    demandOption: true,
+                    default: false
+                })
                 .check((argv, options) => {
                     // console.log('yargs', argv)
                     if(isNaN(argv.b)){
@@ -21,7 +27,7 @@ const argv = require('yargs')
 // console.log('base: yargs', argv.number);
 console.log(argv);
 
-createFile(argv.b)
+createFile(argv.b, argv.l)
     .then(fileName => console.log(fileName, 'created successfully'))
     .then(err => console.log(err));
 
