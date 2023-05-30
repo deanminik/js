@@ -13,7 +13,7 @@ const createFile = async (number = 5, list = false, boundary) => {
             console.log(exitConsole);
         }
 
-        fs.writeFileSync(`table-${number}.txt`, exitTXT);
+        fs.writeFileSync(`./exit/table-${number}.txt`, exitTXT);
 
         return `table-${number}.txt`;
     } catch (err) {

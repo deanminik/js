@@ -12,3 +12,6 @@ createFile(argv.b, argv.l, argv.f)
 
 
 
+// Open the terminal and this example
+// node app -b 77 -l -f 15
+
