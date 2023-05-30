@@ -6,7 +6,7 @@ const colors = require('colors');
 
 console.log(argv);
 
-createFile(argv.b, argv.l)
+createFile(argv.b, argv.l, argv.f)
     .then(fileName => console.log(fileName.rainbow, 'created successfully'))
     .then(err => console.log(err));
 

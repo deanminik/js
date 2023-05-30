@@ -1,18 +1,19 @@
 const fs = require('node:fs');
 const colors = require('colors');
 
-const createFile = async (number = 5, list = false) => {
+const createFile = async (number = 5, list = false, boundary) => {
     try {
-        let exit = '';
-        for (let index = 1; index <= 10; index++) {
+        let exitConsole, exitTXT = '';
+        for (let index = 1; index <= boundary; index++) {
             result = index * number;
-            exit += `${colors.green(number)} ${colors.bgMagenta('x')} ${index} = ${result} \n`;
+            exitConsole += `${colors.green(number)} ${colors.bgMagenta('x')} ${index} = ${result} \n`;
+            exitTXT += `${number} x ${index} = ${result} \n`;
         }
         if (list) {
-            console.log(exit);
+            console.log(exitConsole);
         }
 
-        fs.writeFileSync(`table-${number}.txt`, exit);
+        fs.writeFileSync(`table-${number}.txt`, exitTXT);
 
         return `table-${number}.txt`;
     } catch (err) {

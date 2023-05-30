@@ -13,6 +13,13 @@ const argv = require('yargs')
         describe: 'show the list of the multiplication'
 
     })
+    .option('f', {
+        alias: 'fence',
+        type: 'number',
+        demandOption: true,
+        describe: 'Add the limit of this multiplication'
+
+    })
     .check((argv, options) => {
         // console.log('yargs', argv)
         if (isNaN(argv.b)) {
