@@ -1,4 +1,10 @@
-const { inquireMenu, pause} = require('./helpers/from-inquirer-handle-messages/inquirer.js');
+const {
+    inquireMenu,
+    pause,
+    readInput
+} = require('./helpers/from-inquirer-handle-messages/inquirer.js');
+const Task = require('./models/task.js');
+const Tasks = require('./models/tasks.js');
 
 require('colors');
 
@@ -13,11 +19,30 @@ console.clear();
 const main = async () => {
 
     let opt = '';
-
+    const tasks = new Tasks();
+    // console.log(tasks);
     do {
         opt = await inquireMenu();//await = Hey!! wait here until we get a result(resolve())
 
-        console.log({ opt });
+        // console.log({ opt });
+        // const tasks = new Tasks();
+        // console.log(tasks);
+        // const task = new Task('Buy food');
+        // console.log(task);
+
+        switch (opt) {
+            case '1':
+                const desc = await readInput('Description: ');
+                // console.log(desc);
+                tasks.createTask(desc);
+                break;
+            case '2':
+                console.log(tasks._listed);
+                break;
+
+            default:
+                break;
+        }
 
         await pause();
 

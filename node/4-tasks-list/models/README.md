@@ -1,0 +1,1 @@
+Models will be used to create our **business logic** of our project  
