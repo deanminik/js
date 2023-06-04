@@ -53,6 +53,14 @@ const main = async () => {
                 // console.log(tasks.listedArr);
                 tasks.completedList();
                 break;
+            case '3':
+
+                tasks.listPendingCompleted(true);
+                break;
+            case '4':
+
+                tasks.listPendingCompleted(false);
+                break;
 
             default:
                 break;

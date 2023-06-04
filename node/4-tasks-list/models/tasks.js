@@ -57,6 +57,30 @@ class Tasks {
         });
     }
 
+
+    listPendingCompleted(completed = true) {
+        let counter = 0;
+        this.listedArr.forEach((task) => {
+
+            const { desc, completedIn } = task;
+            const state = (completedIn) ? 'Completed'.green : 'Pending'.red;
+            if (completed) {
+                if (completedIn) {
+                    counter += 1;
+                    console.log(`${counter.toString().green}. ${desc} :: ${state}`);
+                }
+            } else {
+                if (!completedIn) {
+                    counter += 1;
+                    console.log(`${counter.toString().green}. ${desc} :: ${state}`);
+                }
+            }
+       
+
+
+        });
+    }
+
 }
 
 
