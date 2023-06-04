@@ -1,7 +1,8 @@
 const {
     inquireMenu,
     pause,
-    readInput
+    readInput,
+    listedTaskDelete
 } = require('./helpers/from-inquirer-handle-messages/inquirer.js');
 
 const { saveDB, readDB } = require('./helpers/savefile.js');
@@ -61,7 +62,11 @@ const main = async () => {
 
                 tasks.listPendingCompleted(false);
                 break;
+            case '6':
 
+                const id = await listedTaskDelete(tasks.listedArr);
+                console.log({ id });
+                break;
             default:
                 break;
         }

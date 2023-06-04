@@ -17,19 +17,19 @@ const questions = [
             name: `${'2'.green}. List tasks`
         }, {
             value: '3',
-            name:  `${'3'.green}. Completed tasks`
+            name: `${'3'.green}. Completed tasks`
         }, {
             value: '4',
-            name:  `${'4'.green}. Pending tasks`
+            name: `${'4'.green}. Pending tasks`
         }, {
             value: '5',
-            name:  `${'5'.green}. Complete task(s)`
+            name: `${'5'.green}. Complete task(s)`
         }, {
             value: '6',
-            name:  `${'6'.green}. Delete task`
+            name: `${'6'.green}. Delete task`
         }, {
             value: '0',
-            name:  `${'0'.green}. Exit`
+            name: `${'0'.green}. Exit`
         }
 
         ]
@@ -76,8 +76,37 @@ const readInput = async (message_from_user) => {
     return desc;
 }
 
+const listedTaskDelete = async (tasks = []) => {
+    // {example
+    //     value: task.id
+    //     name: `${'2'.green}. List tasks`
+    // }
+    const choices = tasks.map((task, index) => {//Map->  loop every element and I can do anything with the value, and return a new array with the changes of every element
+        const idx = `${index + 1}`.green;
+
+        return {
+            // msg: 'hello' 
+            value: task.id,
+            name: `${idx} ${task.desc}`
+        }
+    });
+    // console.log(choices);
+    const questions = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Delete',
+            choices
+
+        }]
+    const { id } = await inquirer.prompt(questions);
+
+    return id;
+}
+
 module.exports = {
     inquireMenu,
     pause,
-    readInput
+    readInput,
+    listedTaskDelete
 }

@@ -75,10 +75,13 @@ class Tasks {
                     console.log(`${counter.toString().green}. ${desc} :: ${state}`);
                 }
             }
-       
-
-
         });
+    }
+
+    deleteTask(id = ''){
+        if(this._listed[id]){
+            delete this._listed[id];
+        }
     }
 
 }
