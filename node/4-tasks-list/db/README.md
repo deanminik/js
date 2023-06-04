@@ -1,4 +1,4 @@
-## Visula code pretty format for JSON files
+## Visual Code pretty format for JSON files
 
 Extension: JSON Tools by Erick Lynd
 

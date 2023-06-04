@@ -4,10 +4,12 @@ const {
     readInput
 } = require('./helpers/from-inquirer-handle-messages/inquirer.js');
 
+const { saveDB, readDB } = require('./helpers/savefile.js');
+//CLASSES 
 const Task = require('./models/task.js');
 const Tasks = require('./models/tasks.js');
 
-const saveDB = require('./helpers/savefile.js');
+
 
 require('colors');
 
@@ -21,6 +23,16 @@ const main = async () => {
     let opt = '';
     const tasks = new Tasks();
     // console.log(tasks);
+
+    const tasksDB = readDB();
+
+    if (tasksDB) {//load tasks
+        tasks.loadTasksFromArray(tasksDB);
+    }
+
+
+    // await pause();
+
     do {
         opt = await inquireMenu();//await = Hey!! wait here until we get a result(resolve())
 
@@ -45,7 +57,7 @@ const main = async () => {
                 break;
         }
 
-        saveDB(tasks);
+        saveDB(tasks.listedArr);
 
 
         await pause();

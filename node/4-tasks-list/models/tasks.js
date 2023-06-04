@@ -8,7 +8,7 @@ class Tasks {
         const listed = [];
         //Object.keys returns an array of keys from my array; 
         Object.keys(this._listed).forEach(key => {// loop my key's array with forEach
-           // console.log(key);// output-> f76e3532-4143-421e-8ba5-2c293f13ebe9
+            // console.log(key);// output-> f76e3532-4143-421e-8ba5-2c293f13ebe9
             const task = this._listed[key];
             // console.log(task);
             listed.push(task);
@@ -18,6 +18,18 @@ class Tasks {
     constructor() {
         this._listed = {};
 
+    }
+
+    loadTasksFromArray(tasks = []) {
+        // console.log((typeof tasks));
+        // console.log(tasks);
+        if (!Array.isArray(tasks)) {
+            throw new Error(`Tasks must be an array.`);
+        }
+
+        tasks.forEach(task => {
+            this._listed[task.id] = task;
+        });
     }
 
     createTask(desc = '') {
