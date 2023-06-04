@@ -63,7 +63,7 @@ class Tasks {
         this.listedArr.forEach((task) => {
 
             const { desc, completedIn } = task;
-            const state = (completedIn) ? 'Completed'.green : 'Pending'.red;
+            const state = (completedIn) ? completedIn.green : 'Pending'.red;
             if (completed) {
                 if (completedIn) {
                     counter += 1;
@@ -78,12 +78,26 @@ class Tasks {
         });
     }
 
-    deleteTask(id = ''){
-        if(this._listed[id]){
+    deleteTask(id = '') {
+        if (this._listed[id]) {
             delete this._listed[id];
         }
     }
+    toggleCompleted(ids = []) {
+        ids.forEach(id => {
+            const task = this._listed[id];
+            if (!task.completedIn) {
+                task.completedIn = new Date().toISOString();
+            }
+        });
 
+        this.listedArr.forEach(task => {
+            if (!ids.includes(task.id)) {
+                this._listed[task.id];
+                task.completedIn = null
+            }
+        });
+    }
 }
 
 
