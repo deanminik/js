@@ -3,15 +3,15 @@ const {
     pause,
     readInput
 } = require('./helpers/from-inquirer-handle-messages/inquirer.js');
+
 const Task = require('./models/task.js');
 const Tasks = require('./models/tasks.js');
+
+const saveDB = require('./helpers/savefile.js');
 
 require('colors');
 
 // const { showMenu, pause } = require('./helpers/manually-handle-messages/messages');
-
-
-
 
 console.clear();
 
@@ -44,6 +44,9 @@ const main = async () => {
             default:
                 break;
         }
+
+        saveDB(tasks);
+
 
         await pause();
 
