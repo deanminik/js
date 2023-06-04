@@ -3,7 +3,8 @@ const {
     pause,
     readInput,
     listedTaskDelete,
-    confirm
+    confirm,
+    showListedCheckList
 } = require('./helpers/from-inquirer-handle-messages/inquirer.js');
 
 const { saveDB, readDB } = require('./helpers/savefile.js');
@@ -63,16 +64,23 @@ const main = async () => {
 
                 tasks.listPendingCompleted(false);
                 break;
+            case '5':
+
+                const ids = await showListedCheckList(tasks.listedArr);
+                break;
             case '6':
 
                 const id = await listedTaskDelete(tasks.listedArr);
                 const ok = await confirm('Are you sure you want to delete?');
                 // console.log({ id });
                 // console.log({ ok });
-                if (ok) {
-                    tasks.deleteTask(id);
-                    console.log('Task deleted successfully');
+                if (id !== '0') {
+                    if (ok) {
+                        tasks.deleteTask(id);
+                        console.log('Task deleted successfully');
+                    }
                 }
+
                 break;
             default:
                 break;
