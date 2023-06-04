@@ -50,7 +50,8 @@ const main = async () => {
                 break;
             case '2':
                 // console.log(tasks._listed);
-                console.log(tasks.listedArr);
+                // console.log(tasks.listedArr);
+                tasks.completedList();
                 break;
 
             default:

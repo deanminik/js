@@ -37,6 +37,26 @@ class Tasks {
         this._listed[task.id] = task;
     }
 
+    completedList() {
+        //Example:
+        //1: In green
+        //Completed: green
+        //Pending: red
+
+        //1. Name of the task :: Complete | Pending 
+        this.listedArr.forEach((task, index) => {
+            const idx = `${index + 1}`.green;
+            // console.log(idx);
+
+            const { desc, completedIn } = task;
+            const state = (completedIn) ? 'Completed'.green : 'Pending'.red;
+
+            console.log(`${idx} ${desc} :: ${state}`);
+
+
+        });
+    }
+
 }
 
 
