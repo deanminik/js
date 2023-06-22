@@ -21,20 +21,19 @@ const main = async () => {
             case 1:
                 //show message
                 const place = await readInput('City: ');
-                console.log(place);
-
+                // console.log(place);
+                await searches.city(place);// because is a promise
+                
                 //Search places
-
                 //select a place
-
                 //Show results
                 console.log('\nData from the city\n'.green);
-                console.log('City:', );
-                console.log('Lat:', );
-                console.log('Long:', );
-                console.log('Temperature:', );
-                console.log('Min:', );
-                console.log('Max:', );
+                console.log('City:',);
+                console.log('Lat:',);
+                console.log('Long:',);
+                console.log('Temperature:',);
+                console.log('Min:',);
+                console.log('Max:',);
                 break;
         }
 
