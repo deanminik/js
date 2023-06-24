@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const {
     inquireMenu,
     pause,
@@ -8,6 +10,8 @@ const {
 } = require('./helpers/inquirer.js');
 const Searches = require('./models/searches.js');
 
+// console.log(process.env);
+// console.log(process.env.MAPBOX_KEY);
 
 const main = async () => {
     const searches = new Searches();
@@ -23,7 +27,7 @@ const main = async () => {
                 const place = await readInput('City: ');
                 // console.log(place);
                 await searches.city(place);// because is a promise
-                
+
                 //Search places
                 //select a place
                 //Show results
