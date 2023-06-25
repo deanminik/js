@@ -64,18 +64,18 @@ const readInput = async (message_from_user) => {
     return desc;
 }
 
-const listedTaskDelete = async (tasks = []) => {
+const listPlaces = async (places = []) => {
     // {example
     //     value: task.id
     //     name: `${'2'.green}. List tasks`
     // }
-    const choices = tasks.map((task, index) => {//Map->  loop every element and I can do anything with the value, and return a new array with the changes of every element
+    const choices = places.map((place, index) => {//Map->  loop every element and I can do anything with the value, and return a new array with the changes of every element
         const idx = `${index + 1}`.green;
 
         return {
             // msg: 'hello' 
-            value: task.id,
-            name: `${idx} ${task.desc}`
+            value: place.id,
+            name: `${idx} ${place.name}`
         }
     });
     // console.log(choices);
@@ -88,7 +88,7 @@ const listedTaskDelete = async (tasks = []) => {
         {
             type: 'list',
             name: 'id',
-            message: 'Delete',
+            message: 'Select the place',
             choices
 
         }]
@@ -140,7 +140,7 @@ module.exports = {
     inquireMenu,
     pause,
     readInput,
-    listedTaskDelete,
+    listPlaces,
     confirm,
     showListedCheckList
 }

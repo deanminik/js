@@ -44,8 +44,14 @@ class Searches {
 
             const resp = await instance.get();
 
-            console.log(resp.data);
-            return []; //return the places that matches with "place" argument
+            // console.log(resp.data);
+            // if want to return an object use ({}) inside the map function that returns an array 
+            return resp.data.features.map(place => ({
+                id: place.id,
+                name: place.place_name_en,
+                lng: place.center[0],
+                lat: place.center[1]
+            }));
         } catch (error) {
             // return [];
             console.log(error);

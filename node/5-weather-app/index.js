@@ -4,7 +4,7 @@ const {
     inquireMenu,
     pause,
     readInput,
-    listedTaskDelete,
+    listPlaces,
     confirm,
     showListedCheckList
 } = require('./helpers/inquirer.js');
@@ -26,15 +26,25 @@ const main = async () => {
                 //show message
                 const place = await readInput('City: ');
                 // console.log(place);
-                await searches.city(place);// because is a promise
+
 
                 //Search places
+                const places = await searches.city(place);
+                // console.log(places);
+
+
                 //select a place
+                const id = await listPlaces(places);
+                // console.log({ id });
+                const placeSelected = places.find(place => place.id === id);
+                // console.log(placeSelected);
+
+
                 //Show results
                 console.log('\nData from the city\n'.green);
-                console.log('City:',);
-                console.log('Lat:',);
-                console.log('Long:',);
+                console.log('City:', placeSelected.name);
+                console.log('Lat:', placeSelected.lat);
+                console.log('Long:', placeSelected.lng);
                 console.log('Temperature:',);
                 console.log('Min:',);
                 console.log('Max:',);
