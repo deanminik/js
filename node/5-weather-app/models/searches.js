@@ -17,6 +17,14 @@ class Searches {
         }
     }
 
+    get paramsWeather() {
+        return {
+
+            appid: process.env.OPENWEATHER_KEY,
+            units: 'metric'
+        }
+    }
+
     async city(place = '') {
 
         try {
@@ -59,6 +67,44 @@ class Searches {
         }
 
 
+    }
+
+    async placeWeather(lat, lon) {
+        try {
+            //instance axios.create()
+            const instance = axios.create({
+                // baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.OPENWEATHER_KEY}&units=metric`,
+                baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+                params: { lat, lon, ...this.paramsWeather }
+
+            });
+
+            //resp.data 
+            const resp = await instance.get();
+            // console.log(resp.data.weather[0].description);
+            // console.log(resp.data.main.temp_min);
+            // console.log(resp.data.main.temp_max);
+            // console.log(resp.data.main.temp);
+
+            // return {
+            //     desc: resp.data.weather[0].description,
+            //     min: resp.data.main.temp_min,
+            //     max: resp.data.main.temp_max,
+            //     temp: resp.data.main.temp
+            // };
+
+            //In this case it is better to use destructuring, less code
+            const { weather, main } = resp.data;
+            return {
+                desc: weather[0].description,
+                min: main.temp_min,
+                max: main.temp_max,
+                temp: main.temp
+            };
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 }

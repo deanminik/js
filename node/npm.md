@@ -33,3 +33,8 @@ run this linux command
 sudo service networking restart
 ```
 
+## Use an environment variable 
+
+```
+process.env.nameofyourvariable
+```

@@ -39,15 +39,20 @@ const main = async () => {
                 const placeSelected = places.find(place => place.id === id);
                 // console.log(placeSelected);
 
+                //weather
+                const weather = await searches.placeWeather(placeSelected.lat, placeSelected.lng)
+
 
                 //Show results
+                console.clear();
                 console.log('\nData from the city\n'.green);
                 console.log('City:', placeSelected.name);
                 console.log('Lat:', placeSelected.lat);
                 console.log('Long:', placeSelected.lng);
-                console.log('Temperature:',);
-                console.log('Min:',);
-                console.log('Max:',);
+                console.log('Temperature:', weather.temp);
+                console.log('Min:', weather.min);
+                console.log('Max:', weather.max);
+                console.log('Description:', weather.desc.blue);
                 break;
         }
 
