@@ -36,8 +36,15 @@ const main = async () => {
                 //select a place
                 const id = await listPlaces(places);
                 // console.log({ id });
+
+                //if the user select zero then go back to the menu
+                if (id === '0') continue;
+
                 const placeSelected = places.find(place => place.id === id);
                 // console.log(placeSelected);
+
+                //store en DB
+                searches.addHistory(placeSelected.name);
 
                 //weather
                 const weather = await searches.placeWeather(placeSelected.lat, placeSelected.lng)
@@ -53,6 +60,13 @@ const main = async () => {
                 console.log('Min:', weather.min);
                 console.log('Max:', weather.max);
                 console.log('Description:', weather.desc.blue);
+                break;
+
+            case 2:
+                searches.history.forEach((place, i) => {
+                    const idx = `${i + 1}.`.green;
+                    console.log(`${idx} ${place}`);
+                })
                 break;
         }
 

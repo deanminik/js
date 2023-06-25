@@ -1,8 +1,10 @@
+const fs = require('fs'); //fs -> FILE SYSTEM 
 
 const axios = require('axios');
 
 class Searches {
     history = ['Tegucigalpa', 'Madrid', 'San José'];
+    dbPath = './db/database.json';
 
     constructor() {
         //TODO: Read if exists
@@ -106,6 +108,30 @@ class Searches {
             console.log(error);
         }
     }
+
+    addHistory(place = '') {
+        //prevent duplicity
+        if (this.history.includes(place.toLocaleLowerCase())) {
+            return;// Don't do anything, so just do not add a new place 
+        }
+        this.history.unshift(place.toLocaleLowerCase());
+
+        //store in a fake database
+        this.saveInDB();
+
+    }
+    saveInDB() {
+
+        const payload = {
+            history: this.history
+        }
+        fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+    }
+
+    readDB() {
+
+    }
+
 
 }
 
