@@ -8,6 +8,7 @@ class Searches {
 
     constructor() {
         //TODO: Read if exists
+        this.readDB();
     }
 
     get paramsMapbox() {
@@ -25,6 +26,16 @@ class Searches {
             appid: process.env.OPENWEATHER_KEY,
             units: 'metric'
         }
+    }
+
+    get historyCapitalize() {
+
+        return this.history.map(place => {
+            let words = place.split(' ');
+            words = words.map(word => word[0].toUpperCase() + word.substring(1));
+
+            return words.join(' ')
+        })
     }
 
     async city(place = '') {
@@ -129,6 +140,15 @@ class Searches {
     }
 
     readDB() {
+        //Exists?
+        if (!fs.existsSync(this.dbPath)) return;
+
+        const info = fs.readFileSync(this.dbPath, { encoding: 'utf-8' });
+
+        const data = JSON.parse(info) // this JSON.parse converts the string into JSON object  
+
+        this.history = data.history;
+        
 
     }
 
