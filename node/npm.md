@@ -21,6 +21,19 @@ npm install inquirer@7.3.3
 npm install uuid@9.0.0
 ```
 
+## nodemon
+
+```  
+npm i nodemon
+```
+Nodemon reads changes from only js files, if you need to see changes from other kind of file stop nodemon and reload.
+But it is posible to setup nodemon to add another extension to read too. 
+### To run use this command
+```  
+nodemon namefile 
+```
+
+
 ## Having an issue with to get the result of an endpoint like this 
 triggerUncaughtException(err, true /* fromPromise */);
             ^
