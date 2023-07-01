@@ -1,5 +1,11 @@
 # NPM PACKAGES
 
+Remember execute this command, when there is an app with npm packages already installed 
+
+```
+npm install
+```
+
 ## colors 
 
 This was the version work on the projects 
