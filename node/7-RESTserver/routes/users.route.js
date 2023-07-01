@@ -18,7 +18,7 @@ const router = Router();
 
 router.get('/', usersGet); //usersGet why without (), because I am sending the reference, not executing 
 
-router.put('/', usersPut);
+router.put('/:id', usersPut);
 
 router.post('/', usersPost);
 

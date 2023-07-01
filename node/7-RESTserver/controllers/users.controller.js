@@ -3,17 +3,27 @@
  */
 const { response } = require('express');
 
-const usersGet = (req, res = response) => {
+const usersGet = (req = request, res = response) => {
+
+    // const queryParamsValues = req.query;
+    const {q = "The is not q", name = "Not name", apikey = "Not apikey"} = req.query;
 
     res.json({
-        msg: 'get API - controller'
+        msg: 'get API - controller',
+        // queryParamsValues
+        q,
+        name,
+        apikey
     });
 }
 
 const usersPut = (req, res = response) => {
 
+    const id = req.params.id;
+
     res.json({
-        msg: 'put API - controller'
+        msg: 'put API - controller',
+        id
     });
 }
 
