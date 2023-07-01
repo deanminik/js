@@ -19,8 +19,20 @@ const usersPut = (req, res = response) => {
 
 const usersPost = (req, res = response) => {
 
+    // const body = req.body
+
+    // res.json({
+    //     msg: 'post API - controller',
+    //     body
+    // });
+
+    const { name, age } = req.body
+    /*Destructuring  */
+
     res.json({
-        msg: 'post API - controller'
+        msg: 'post API - controller',
+        name,
+        age
     });
 }
 
