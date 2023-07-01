@@ -46,8 +46,26 @@ run this linux command
 sudo service networking restart
 ```
 
+## NPM dotenv
+
+```
+npm i dotenv
+```
+
 ## Use an environment variable 
 
 ```
 process.env.nameofyourvariable
 ```
+
+
+## To work with web server and Rest server | Framework express
+```
+ npm i express 
+ ```
+
+## CORS 
+
+ ```
+npm i cors
+ ```

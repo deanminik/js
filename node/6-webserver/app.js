@@ -1,5 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
+require('dotenv').config();
 
 const app = express();
 
@@ -62,4 +63,5 @@ app.get('*', function (req, res) {
     res.sendFile(__dirname + '/public/404.html');//__dirname -> To add a absolute path 
 })
 
-app.listen(8080)
+// app.listen(8080)
+app.listen(process.env.PORT);
