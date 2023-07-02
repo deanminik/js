@@ -1,9 +1,13 @@
 const { Router } = require('express');
+const { check } = require('express-validator');
 const { usersGet,
-     usersPut,
+    usersPut,
     usersPost,
     usersDelete,
     usersPatch } = require('../controllers/users.controller');
+const { validate } = require('../models/user');
+
+
 
 const router = Router();
 
@@ -20,7 +24,11 @@ router.get('/', usersGet); //usersGet why without (), because I am sending the r
 
 router.put('/:id', usersPut);
 
-router.post('/', usersPost);
+// router.post('/', usersPost);
+
+validateInputsMiddleware = [check('email', 'The email is not valid').isEmail()];
+router.post('/', validateInputsMiddleware, usersPost);
+// the middleware goes between the path / and controller and inside an array in case there are more validations 
 
 router.delete('/', usersDelete);
 

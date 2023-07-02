@@ -6,6 +6,7 @@ const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user');
+const { validationResult } = require('express-validator');
 
 const usersGet = (req = request, res = response) => {
 
@@ -33,10 +34,21 @@ const usersPut = (req, res = response) => {
 
 const usersPost = async (req, res = response) => {
 
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json(errors);//json(errors); shows the errors from express validator in user.route.js
+    }
+
     const { name, email, password, rol } = req.body
     const user = new User({ name, email, password, rol }); // if we send from the client parameters that don't already added in the model, mongoose will ignore them for us 
 
     //Check if the email exists
+    const existEmail = await User.findOne({email});
+    if(existEmail){
+        return res.status(400).json({
+            msg: 'The email is already registered'
+        })
+    }
 
 
     //Encrypt or hash the password
