@@ -3,10 +3,12 @@
  */
 const { response } = require('express');
 
+const User = require('../models/user');
+
 const usersGet = (req = request, res = response) => {
 
     // const queryParamsValues = req.query;
-    const {q = "The is not q", name = "Not name", apikey = "Not apikey"} = req.query;
+    const { q = "The is not q", name = "Not name", apikey = "Not apikey" } = req.query;
 
     res.json({
         msg: 'get API - controller',
@@ -27,23 +29,26 @@ const usersPut = (req, res = response) => {
     });
 }
 
-const usersPost = (req, res = response) => {
+const usersPost = async (req, res = response) => {
 
-    // const body = req.body
+    const body = req.body
+    const user = new User(body); // if we send from the client parameters that don't already added in the model, mongoose will ignore them for us 
+
+    await user.save(); //function from mongoose to save the content in mongo  
+
+    res.json({
+        // msg: 'post API - controller',
+        user
+    });
+
+    // const { name, age } = req.body
+    // /*Destructuring  */
 
     // res.json({
     //     msg: 'post API - controller',
-    //     body
+    //     name,
+    //     age
     // });
-
-    const { name, age } = req.body
-    /*Destructuring  */
-
-    res.json({
-        msg: 'post API - controller',
-        name,
-        age
-    });
 }
 
 const usersDelete = (req, res = response) => {
