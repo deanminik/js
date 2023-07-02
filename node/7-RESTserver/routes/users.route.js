@@ -26,8 +26,14 @@ router.put('/:id', usersPut);
 
 // router.post('/', usersPost);
 
-validateInputsMiddleware = [check('email', 'The email is not valid').isEmail()];
-router.post('/', validateInputsMiddleware, usersPost);
+validateInputsMiddlewares = [
+    check('email', 'The email is not valid').isEmail(),
+    check('name', 'The name is required').not().isEmpty(),
+    check('password', 'The password is required and more than 6 letters').isLength({min:6}).not().isEmpty(),
+    check('rol', 'This rol is not valid').isIn(['ADMIN_ROLE','USER_ROLE']).not().isEmpty(),
+
+];
+router.post('/', validateInputsMiddlewares, usersPost);
 // the middleware goes between the path / and controller and inside an array in case there are more validations 
 
 router.delete('/', usersDelete);
