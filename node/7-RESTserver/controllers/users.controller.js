@@ -3,6 +3,8 @@
  */
 const { response } = require('express');
 
+const bcryptjs = require('bcryptjs');
+
 const User = require('../models/user');
 
 const usersGet = (req = request, res = response) => {
@@ -31,9 +33,17 @@ const usersPut = (req, res = response) => {
 
 const usersPost = async (req, res = response) => {
 
-    const body = req.body
-    const user = new User(body); // if we send from the client parameters that don't already added in the model, mongoose will ignore them for us 
+    const { name, email, password, rol } = req.body
+    const user = new User({ name, email, password, rol }); // if we send from the client parameters that don't already added in the model, mongoose will ignore them for us 
 
+    //Check if the email exists
+
+
+    //Encrypt or hash the password
+    const salt = bcryptjs.genSaltSync();//genSaltSync() number of spins to make more complex the encryption | empty means that by default is 10 
+    user.password = bcryptjs.hashSync(password, salt);
+
+    //Save into the database
     await user.save(); //function from mongoose to save the content in mongo  
 
     res.json({
