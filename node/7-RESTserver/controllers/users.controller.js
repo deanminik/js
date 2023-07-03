@@ -42,13 +42,13 @@ const usersPost = async (req, res = response) => {
     const { name, email, password, rol } = req.body
     const user = new User({ name, email, password, rol }); // if we send from the client parameters that don't already added in the model, mongoose will ignore them for us 
 
-    //Check if the email exists
-    const existEmail = await User.findOne({email});
-    if(existEmail){
-        return res.status(400).json({
-            msg: 'The email is already registered'
-        })
-    }
+    // //Check if the email exists
+    // const existEmail = await User.findOne({email});
+    // if(existEmail){
+    //     return res.status(400).json({
+    //         msg: 'The email is already registered'
+    //     })
+    // }
 
 
     //Encrypt or hash the password
