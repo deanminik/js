@@ -37,5 +37,19 @@ const UserSchema = Schema({
 
 });
 
+UserSchema.methods.toJSON = function () {
+    //It is important to user function instead () => arrow function, because we need to use the object "this"
+    // the arrow function keep "this" out side of itself. So use "function" to make a reference to the instance created 
+
+    const { __v, password, ...user } = this.toObject();
+    return user;
+
+    /**
+     * what is this? __v, password, ...user
+     * I am taking __v, password outside and the all variables like name, email etc are saving inside the new variable called ...user 
+     */
+
+
+}
 
 module.exports = model('User', UserSchema);// this is to create the entity in mongodb, User will becomes in users adding the (s)
