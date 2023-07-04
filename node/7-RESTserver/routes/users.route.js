@@ -8,7 +8,7 @@ const { usersGet,
 const { validate } = require('../models/user');
 const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
 
-const { isRoleValid, emailExists } = require('../helpers/db-validators');
+const { isRoleValid, emailExists, existsUserById } = require('../helpers/db-validators');
 
 
 const router = Router();
@@ -24,7 +24,15 @@ const router = Router();
 
 router.get('/', usersGet); //usersGet why without (), because I am sending the reference, not executing 
 
-router.put('/:id', usersPut);
+/**
+ * The isMongoId() will be waiting for only mongo ids, another type of ID from mysql etc, will return an error d
+ */
+router.put('/:id',[
+    check('id', 'Is not a valid ID').isMongoId(),
+    check('id',).custom(existsUserById),
+    check('rol').custom(isRoleValid),
+    validateInputs// This doesn't activate the userPut controller below if find something bad in the check fields 
+], usersPut);
 
 // router.post('/', usersPost);
 

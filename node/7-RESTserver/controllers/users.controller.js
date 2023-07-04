@@ -22,13 +22,24 @@ const usersGet = (req = request, res = response) => {
     });
 }
 
-const usersPut = (req, res = response) => {
+const usersPut = async (req, res = response) => {
 
     const id = req.params.id;
+    const { _id, password, google, email, ...allWithOut_password_and_google_email_id } = req.body;
+
+    //Validate against database
+    if (password) {
+        //Encrypt or hash the password
+        const salt = bcryptjs.genSaltSync();//genSaltSync() number of spins to make more complex the encryption | empty means that by default is 10 
+        allWithOut_password_and_google_email_id.password = bcryptjs.hashSync(password, salt);
+    }
+
+    //Update this register
+    const user = await User.findByIdAndUpdate(id, allWithOut_password_and_google_email_id);
 
     res.json({
         msg: 'put API - controller',
-        id
+        user
     });
 }
 
