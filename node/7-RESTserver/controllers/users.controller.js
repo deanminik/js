@@ -8,17 +8,20 @@ const bcryptjs = require('bcryptjs');
 const User = require('../models/user');
 // const { validationResult } = require('express-validator');
 
-const usersGet = (req = request, res = response) => {
+const usersGet = async (req = request, res = response) => {
 
     // const queryParamsValues = req.query;
-    const { q = "The is not q", name = "Not name", apikey = "Not apikey" } = req.query;
+    // const { q = "The is not q", name = "Not name", apikey = "Not apikey" } = req.query;
+
+    const users = await User.find(); // Return all users from mongo 
 
     res.json({
-        msg: 'get API - controller',
-        // queryParamsValues
-        q,
-        name,
-        apikey
+        // msg: 'get API - controller',
+        // // queryParamsValues
+        // q,
+        // name,
+        // apikey
+        users 
     });
 }
 
@@ -37,10 +40,7 @@ const usersPut = async (req, res = response) => {
     //Update this register
     const user = await User.findByIdAndUpdate(id, allWithOut_password_and_google_email_id);
 
-    res.json({
-        msg: 'put API - controller',
-        user
-    });
+    res.json(user);
 }
 
 const usersPost = async (req, res = response) => {
