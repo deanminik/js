@@ -13,7 +13,11 @@ const usersGet = async (req = request, res = response) => {
     // const queryParamsValues = req.query;
     // const { q = "The is not q", name = "Not name", apikey = "Not apikey" } = req.query;
 
-    const users = await User.find(); // Return all users from mongo 
+    // Return all users from mongo 
+    const {limit = 5} = req.query;
+    const users = await User.find()
+        .limit(Number(limit)); 
+
 
     res.json({
         // msg: 'get API - controller',
