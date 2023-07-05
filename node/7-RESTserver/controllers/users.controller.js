@@ -15,11 +15,15 @@ const usersGet = async (req = request, res = response) => {
 
     // Return all users from mongo 
     const { limit = 5, from = 0 } = req.query;
-    const users = await User.find()
+
+    const query = { state: true };
+
+    const users = await User.find(query)
         .skip(Number(from))
         .limit(Number(limit));
 
-    const total = await User.countDocuments();
+    const total = await User.countDocuments(query);
+
     res.json({
         // msg: 'get API - controller',
         // // queryParamsValues
