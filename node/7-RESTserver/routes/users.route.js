@@ -51,7 +51,11 @@ validateInputsMiddlewares = [
 router.post('/', validateInputsMiddlewares, usersPost);
 // the middleware goes between the path / and controller and inside an array in case there are more validations 
 
-router.delete('/', usersDelete);
+router.delete('/:id',[   
+    check('id', 'Is not a valid ID').isMongoId(),
+    check('id',).custom(existsUserById),
+    validateInputs] 
+    ,usersDelete);
 
 router.patch('/', usersPatch);
 
