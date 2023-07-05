@@ -18,11 +18,18 @@ const usersGet = async (req = request, res = response) => {
 
     const query = { state: true };
 
-    const users = await User.find(query)
-        .skip(Number(from))
-        .limit(Number(limit));
+    // const users = await User.find(query)
+    //     .skip(Number(from))
+    //     .limit(Number(limit));
 
-    const total = await User.countDocuments(query);
+    // const total = await User.countDocuments(query);
+
+    const [first_promises_total, second_promise_users] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
+            .skip(Number(from))
+            .limit(Number(limit))
+    ])
 
     res.json({
         // msg: 'get API - controller',
@@ -30,8 +37,11 @@ const usersGet = async (req = request, res = response) => {
         // q,
         // name,
         // apikey
-        total,
-        users
+        // total,
+        // users
+        // resp
+        first_promises_total,
+        second_promise_users
     });
 }
 
