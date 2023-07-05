@@ -14,9 +14,10 @@ const usersGet = async (req = request, res = response) => {
     // const { q = "The is not q", name = "Not name", apikey = "Not apikey" } = req.query;
 
     // Return all users from mongo 
-    const {limit = 5} = req.query;
+    const { limit = 5, from = 0 } = req.query;
     const users = await User.find()
-        .limit(Number(limit)); 
+        .skip(Number(from))
+        .limit(Number(limit));
 
 
     res.json({
@@ -25,7 +26,7 @@ const usersGet = async (req = request, res = response) => {
         // q,
         // name,
         // apikey
-        users 
+        users
     });
 }
 
