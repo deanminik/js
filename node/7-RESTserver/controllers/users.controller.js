@@ -109,7 +109,10 @@ const usersDelete = async (req, res = response) => {
 
 
     //Deleted physically 
-    const user = await User.findByIdAndDelete(id);
+    // const user = await User.findByIdAndDelete(id);
+
+    //Correct way to delete or des activate a record
+    const user = await User.findByIdAndUpdate(id, { state: false });
 
     // res.json({
     //     // msg: 'delete API - controller'
