@@ -19,13 +19,14 @@ const usersGet = async (req = request, res = response) => {
         .skip(Number(from))
         .limit(Number(limit));
 
-
+    const total = await User.countDocuments();
     res.json({
         // msg: 'get API - controller',
         // // queryParamsValues
         // q,
         // name,
         // apikey
+        total,
         users
     });
 }
