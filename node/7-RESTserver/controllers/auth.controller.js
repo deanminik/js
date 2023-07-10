@@ -1,6 +1,8 @@
 const { response } = require('express');//To help us with the typing->tipado 
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
+const { generateJWT } = require('../helpers/generate-jwt');
+
 
 const login = async (req, res = response) => {
 
@@ -34,10 +36,14 @@ const login = async (req, res = response) => {
 
 
         //Is everything is correct generate the JWT
+        const token = await generateJWT(user.id);
 
         res.json({
             msg: 'Login ok',
-            email, password
+            email, 
+            password,
+            token
+            
         });
 
     } catch (error) {
