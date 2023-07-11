@@ -9,6 +9,7 @@ const { validate } = require('../models/user');
 const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
 
 const { isRoleValid, emailExists, existsUserById } = require('../helpers/db-validators');
+const { validateJWT } = require('../middlewares/validate-jwt');
 
 
 const router = Router();
@@ -52,6 +53,7 @@ router.post('/', validateInputsMiddlewares, usersPost);
 // the middleware goes between the path / and controller and inside an array in case there are more validations 
 
 router.delete('/:id',[   
+    validateJWT,
     check('id', 'Is not a valid ID').isMongoId(),
     check('id',).custom(existsUserById),
     validateInputs] 
