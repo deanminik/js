@@ -28,7 +28,7 @@ const login = async (req, res = response) => {
 
         //verify password
         const validPassword = bcryptjs.compareSync(password, user.password);
-        if(!validPassword){
+        if (!validPassword) {
             return res.status(400).json({
                 msg: 'User / Password are not correct - password: false'
             });
@@ -39,11 +39,9 @@ const login = async (req, res = response) => {
         const token = await generateJWT(user.id);
 
         res.json({
-            msg: 'Login ok',
-            email, 
-            password,
+            user,
             token
-            
+
         });
 
     } catch (error) {

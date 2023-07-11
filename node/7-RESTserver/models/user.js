@@ -41,7 +41,8 @@ UserSchema.methods.toJSON = function () {
     //It is important to user function instead () => arrow function, because we need to use the object "this"
     // the arrow function keep "this" out side of itself. So use "function" to make a reference to the instance created 
 
-    const { __v, password, ...user } = this.toObject();
+    const { __v, password, _id, ...user } = this.toObject();
+    user.uid = _id;
     return user;
 
     /**
