@@ -1,6 +1,6 @@
 const { response, request } = require('express');// To have the typing, this is better if we are not working with typescript
 
-const isAdminRole = (req, res = response) => {
+const isAdminRole = (req, res = response, next) => {
     if (!req.user) {
         return res.status(500).json({
             msg: 'Verify the token first, before the role verification'

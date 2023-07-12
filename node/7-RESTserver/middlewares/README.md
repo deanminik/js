@@ -2,7 +2,7 @@
 
 Here, we've created all customs middlewares 
 
-Remember: Middlewares are functions that execute before our controllers function. | Also our middlewares are waiting for a request and response
+Remember: Middlewares are functions that execute before our controllers function. | Also our middlewares are waiting for a request, response and next = "to indicate to someone that is executing this middleware, that you can continue with the next middleware"
 
 The purpose of our middlewares is to verify according to our customs verifications if everything is correct.
 
