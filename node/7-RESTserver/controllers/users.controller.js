@@ -119,7 +119,9 @@ const usersDelete = async (req, res = response) => {
     //     // msg: 'delete API - controller'
     //     id
     // });
-    res.json({ user, uid });
+    const userAuthenticated = req.user;
+    // res.json({ user, uid });
+    res.json({user, userAuthenticated});
 }
 
 const usersPatch = (req, res = response) => {
