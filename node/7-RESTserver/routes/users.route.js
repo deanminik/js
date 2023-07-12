@@ -7,9 +7,11 @@ const { usersGet,
     usersPatch } = require('../controllers/users.controller');
 const { validate } = require('../models/user');
 const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
+const { validateJWT } = require('../middlewares/validate-jwt');
+const { isAdminRole } = require('../middlewares/validate-roles');
 
 const { isRoleValid, emailExists, existsUserById } = require('../helpers/db-validators');
-const { validateJWT } = require('../middlewares/validate-jwt');
+
 
 
 const router = Router();
@@ -28,7 +30,7 @@ router.get('/', usersGet); //usersGet why without (), because I am sending the r
 /**
  * The isMongoId() will be waiting for only mongo ids, another type of ID from mysql etc, will return an error d
  */
-router.put('/:id',[
+router.put('/:id', [
     check('id', 'Is not a valid ID').isMongoId(),
     check('id',).custom(existsUserById),
     check('rol').custom(isRoleValid),
@@ -52,12 +54,13 @@ validateInputsMiddlewares = [
 router.post('/', validateInputsMiddlewares, usersPost);
 // the middleware goes between the path / and controller and inside an array in case there are more validations 
 
-router.delete('/:id',[   
+router.delete('/:id', [
     validateJWT,
+    isAdminRole,
     check('id', 'Is not a valid ID').isMongoId(),
     check('id',).custom(existsUserById),
-    validateInputs] 
-    ,usersDelete);
+    validateInputs]
+    , usersDelete);
 
 router.patch('/', usersPatch);
 
