@@ -8,7 +8,7 @@ const { usersGet,
 const { validate } = require('../models/user');
 const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { isAdminRole } = require('../middlewares/validate-roles');
+const { isAdminRole, hasRole } = require('../middlewares/validate-roles');
 
 const { isRoleValid, emailExists, existsUserById } = require('../helpers/db-validators');
 
@@ -56,7 +56,8 @@ router.post('/', validateInputsMiddlewares, usersPost);
 
 router.delete('/:id', [
     validateJWT,
-    isAdminRole,
+    // isAdminRole,
+    hasRole('ADMIN_ROLE', 'SALES_ROLE'),
     check('id', 'Is not a valid ID').isMongoId(),
     check('id',).custom(existsUserById),
     validateInputs]
