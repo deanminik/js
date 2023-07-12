@@ -6,9 +6,11 @@ const { usersGet,
     usersDelete,
     usersPatch } = require('../controllers/users.controller');
 const { validate } = require('../models/user');
-const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { isAdminRole, hasRole } = require('../middlewares/validate-roles');
+// const { validateInputs } = require('../middlewares/validate-inputs');// remember a middleware if just a function to execute before a controller 
+// const { validateJWT } = require('../middlewares/validate-jwt');
+// const { isAdminRole, hasRole } = require('../middlewares/validate-roles');
+
+const { validateInputs, validateJWT, isAdminRole, hasRole } = require('../middlewares'); //calling the index.js instead the previous files
 
 const { isRoleValid, emailExists, existsUserById } = require('../helpers/db-validators');
 
