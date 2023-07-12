@@ -28,6 +28,19 @@ const validateJWT = async (req = request, res = response, next) => {
         //Read the user that belongs to uid
         const user = await User.findById(uid);//There is a user, and everything is ok 
 
+        if(!user){
+            return res.status(401).json({
+                msg: 'Token no valid - user does not exist DB'
+            });
+        }
+
+        //Verify if the user has the state set to "true."
+        if (!user.state) {
+            return res.status(401).json({
+                msg: 'Token no valid - user with state FALSE'
+            });
+        }
+
         req.user = user;
 
 
@@ -40,7 +53,7 @@ const validateJWT = async (req = request, res = response, next) => {
 
     }
 
-    
+
 }
 
 module.exports = {
