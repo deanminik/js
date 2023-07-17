@@ -2,6 +2,7 @@ const { response } = require('express');//To help us with the typing->tipado
 const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const { generateJWT } = require('../helpers/generate-jwt');
+const { googleVerify } = require('../helpers/google-verify');
 
 
 const login = async (req, res = response) => {
@@ -56,10 +57,24 @@ const login = async (req, res = response) => {
 const googleSignIn = async (req, res = response) => {
     const { id_token } = req.body;
 
-    res.json({
-        msg: 'Everything looks ok!',
-        id_token
-    })
+    try {
+
+        // const googleUser = await googleVerify(id_token);
+        const { name, img, email } = await googleVerify(id_token);
+
+        res.json({
+            msg: 'Everything looks ok!',
+            id_token
+        });
+        // console.log(googleUser);
+    } catch (error) {
+        json.status(400).json({
+            ok: false,
+            msg: 'We could not verify the token'
+        })
+    }
+
+
 
 }
 
