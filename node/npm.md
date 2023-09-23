@@ -28,13 +28,15 @@ npm install uuid@9.0.0
 ```
 
 ## nodemon
+Nodemon reads changes from only js files, if you need to see changes from other kind of file stop nodemon and reload.
+But it is posible to setup nodemon to add another extension to read too. 
 
 ```  
 npm i nodemon
 ```
-Nodemon reads changes from only js files, if you need to see changes from other kind of file stop nodemon and reload.
-But it is posible to setup nodemon to add another extension to read too. 
+
 ### To run use this command
+For example use nodemon app, app is the name of the main file
 ```  
 nodemon namefile 
 ```
@@ -74,4 +76,11 @@ process.env.nameofyourvariable
 
  ```
 npm i cors
+ ```
+
+
+## If everything is done,  to run your project just call nodemon and the main js file 
+
+ ```
+nodemon app 
  ```
