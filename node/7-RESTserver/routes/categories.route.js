@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validateInputs } = require('../middlewares/validate-inputs');
+const { validateJWT } = require('../middlewares/validate-jwt');
 
 const router = Router();
 
@@ -20,7 +21,11 @@ router.get('/:id',(req, res) => {
 });
 
 //Endpoint to create a new category - private -> Only someone with a valid token 
-router.post('/',(req, res) => {
+router.post('/',[
+    validateJWT,
+    check('name', 'The name is required').not().isEmpty(),
+    validateInputs
+],(req, res) => {
     res.json('this is a post');
 });
 

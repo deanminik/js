@@ -4,7 +4,8 @@ const CategorySchema = Schema({
     //name-> has to be the same name from the collection in mongo 
     name: {
         type: String,
-        required: [true, 'The name is required']
+        required: [true, 'The name is required'],
+        unique:true
     },
     state: {
         type: Boolean,
