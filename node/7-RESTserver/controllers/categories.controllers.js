@@ -9,8 +9,8 @@ const createCategory = async (req, resp = response) => {
     
     //If there a category with that name, send an error
     const categoryDB = await Category.findOne({ name });
-    if (!categoryDB) {
-        return res.status(400).json({
+    if (categoryDB) {
+        return resp.status(400).json({
             msg: `The category ${categoryDB.name}, already exists`
         });
     }
@@ -28,7 +28,7 @@ const createCategory = async (req, resp = response) => {
     await category.save();
     
     //send us a response to now that everything is ok 
-    res.status(201).json(category);
+    resp.status(201).json(category);
 
 }
 
