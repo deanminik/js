@@ -6,8 +6,10 @@ const { validateJWT } = require('../middlewares/validate-jwt');
 const { createCategory,
     getCategories,
     getCategoryByID,
-    updateCategory } = require('../controllers/categories.controllers');
+    updateCategory,
+    deleteCategory } = require('../controllers/categories.controllers');
 const { existsCategoryById } = require('../helpers/db-validators');
+const { isAdminRole } = require('../middlewares');
 
 const router = Router();
 
@@ -41,7 +43,13 @@ router.put('/:id', [
 ], updateCategory);
 
 //Endpoint to delete a category using an id - Only Admin can call this endpoint 
-router.delete('/:id', (req, res) => {
-    res.json('this is a delete -> we do not delete, just update the state ');
-});
+router.delete('/:id', [
+    validateJWT,
+    isAdminRole,
+    check('id', 'This is not a MONGO ID').isMongoId(),
+    check('id').custom(existsCategoryById),
+    validateInputs
+], deleteCategory);
+
+
 module.exports = router;

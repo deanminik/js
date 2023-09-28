@@ -79,23 +79,28 @@ const updateCategory = async (req, resp = response) => {
     in our models those fields.
     So we need to avoid that 
     */
-    const { state, user, ...data} = req.body;
+    const { state, user, ...data } = req.body;
     //Save the name of the category 
     data.name = data.name.toUpperCase();
     data.user = req.user._id; //Now stablish the user, so we can keep the last user detected 
-    const category = await Category.findByIdAndUpdate(id, data, {new:true}); // This {new:true} is useful if you want to see the new change on the answer
-    
+    const category = await Category.findByIdAndUpdate(id, data, { new: true }); // This {new:true} is useful if you want to see the new change on the answer
+
     resp.json(category);// If we get the message from here, it means we got an excellent result;
-   
 
+}
 
+const deleteCategory = async (req, resp = response) => {
+    //Here we just need the ID to see which elements can we delete 
+    const { id } = req.params;
+    const categoryDeleted = await Category.findByIdAndUpdate(id, {state:false}, {new: true});
 
-    
+    resp.json(categoryDeleted);
 }
 
 module.exports = {
     createCategory,
     getCategories,
     getCategoryByID,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }
