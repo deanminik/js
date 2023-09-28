@@ -32,7 +32,7 @@ const createCategory = async (req, resp = response) => {
 
 }
 
-const getCategories = async (req, res = response) => {
+const getCategories = async (req, resp = response) => {
     /* his should have pagination 
     * Total of the pagination
     * Create an object called populate this belongs to mongoose, useful to indicate who saved 
@@ -54,7 +54,7 @@ const getCategories = async (req, res = response) => {
             .limit(Number(limit))
     ])
 
-    res.json({    
+    resp.json({    
         first_promises_total,
         second_promise_categories
     });
@@ -62,7 +62,16 @@ const getCategories = async (req, res = response) => {
 
 }
 
+const getCategoryByID = async (req, resp = response) => {
+    //Extract the ID that is coming from the request 
+    const {id} = req.params;
+    const category = await Category.findById(id).populate('user','name');
+
+    resp.json(category);
+}
+
 module.exports = {
     createCategory,
-    getCategories
+    getCategories,
+    getCategoryByID
 }

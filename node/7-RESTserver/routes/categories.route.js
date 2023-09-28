@@ -3,7 +3,8 @@ const { check } = require('express-validator');
 
 const { validateInputs } = require('../middlewares/validate-inputs');
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { createCategory, getCategories } = require('../controllers/categories.controllers');
+const { createCategory, getCategories, getCategoryByID } = require('../controllers/categories.controllers');
+const { existsCategoryById } = require('../helpers/db-validators');
 
 const router = Router();
 
@@ -15,9 +16,11 @@ const router = Router();
 router.get('/', getCategories);
 
 //Endpoint to get just one category by id - Public
-router.get('/:id', (req, res) => {
-    res.json('this is a get by ID');
-});
+router.get('/:id',[
+    check('id','This is not a MONGO ID').isMongoId(),
+    check('id').custom(existsCategoryById),
+    validateInputs
+],getCategoryByID);
 
 //Endpoint to create a new category - private -> Only someone with a valid token 
 router.post('/', [
