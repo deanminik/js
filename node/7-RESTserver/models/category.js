@@ -5,7 +5,7 @@ const CategorySchema = Schema({
     name: {
         type: String,
         required: [true, 'The name is required'],
-        unique:true
+        unique: true
     },
     state: {
         type: Boolean,
@@ -21,5 +21,19 @@ const CategorySchema = Schema({
 
 });
 
+CategorySchema.methods.toJSON = function () {
+    //It is important to user function instead () => arrow function, because we need to use the object "this"
+    // the arrow function keep "this" out side of itself. So use "function" to make a reference to the instance created 
+
+    const { __v, state, ...data } = this.toObject();
+    return data;
+
+    /**
+     * what is this? __v, state
+     * I am taking __v, state outside and the all variables like name,  etc are saving inside the new variable called ...data 
+     */
+
+
+}
 
 module.exports = model('Category', CategorySchema);

@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 
 const { validateInputs } = require('../middlewares/validate-inputs');
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { createCategory } = require('../controllers/categories.controllers');
+const { createCategory, getCategories } = require('../controllers/categories.controllers');
 
 const router = Router();
 
@@ -12,9 +12,7 @@ const router = Router();
  */
 
 // Endpoint to get all categories - Public 
-router.get('/', (req, res) => {
-    res.json('this is a get');
-});
+router.get('/', getCategories);
 
 //Endpoint to get just one category by id - Public
 router.get('/:id', (req, res) => {

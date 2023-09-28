@@ -3,10 +3,10 @@ const { Category } = require('../models');
 
 
 const createCategory = async (req, resp = response) => {
-    
+
     //we read name that is coming from the body and capitalize
     const name = req.body.name.toUpperCase();
-    
+
     //If there a category with that name, send an error
     const categoryDB = await Category.findOne({ name });
     if (categoryDB) {
@@ -21,18 +21,48 @@ const createCategory = async (req, resp = response) => {
         user: req.user._id //this should have to be a user from mongo, the jwt has the data to now that in the payload 
 
     }
-    
+
     //create the new category
     const category = new Category(data);
     //save DB
     await category.save();
-    
+
     //send us a response to now that everything is ok 
     resp.status(201).json(category);
 
 }
 
+const getCategories = async (req, res = response) => {
+    /* his should have pagination 
+    * Total of the pagination
+    * Create an object called populate this belongs to mongoose, useful to indicate who saved 
+    */
+
+    //--------------------------------Pagination 
+
+    // Return all categories from mongo 
+    const { limit = 5, from = 0 } = req.query;
+
+    const query = { state: true }; // bring me only with the state active
+
+
+    const [first_promises_total, second_promise_categories] = await Promise.all([
+        Category.countDocuments(query),
+        Category.find(query)
+            .populate('user','name')
+            .skip(Number(from))
+            .limit(Number(limit))
+    ])
+
+    res.json({    
+        first_promises_total,
+        second_promise_categories
+    });
+
+
+}
 
 module.exports = {
-    createCategory
+    createCategory,
+    getCategories
 }
