@@ -13,10 +13,21 @@ const searchUsers = async (term = '', resp = response) => {
     const isMongoID = ObjectId.isValid(term);
     if (isMongoID) {
         const user = await User.findById(term);
-        resp.json({
+        return resp.json({
             results: (user) ? [user] : []
         });
-    }
+    } 
+
+    const regex = new RegExp(term, 'i'); //this means -> be case insensitive so it doesn't matter if this is A or a 
+
+    const users = await User.find({ 
+        $or:[{name: regex}, {email: regex}],
+        $and:[{state:true}]
+     });
+
+    resp.json({
+        results: users
+    });
 }
 
 
