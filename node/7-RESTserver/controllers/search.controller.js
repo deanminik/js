@@ -16,17 +16,22 @@ const searchUsers = async (term = '', resp = response) => {
         return resp.json({
             results: (user) ? [user] : []
         });
-    } 
+    }
 
     const regex = new RegExp(term, 'i'); //this means -> be case insensitive so it doesn't matter if this is A or a 
 
-    const users = await User.find({ 
-        $or:[{name: regex}, {email: regex}],
-        $and:[{state:true}]
-     });
+    const users = await User.find({
+        $or: [{ name: regex }, { email: regex }],
+        $and: [{ state: true }]
+    });
+
+    const total = await User.count({
+        $or: [{ name: regex }, { email: regex }],
+        $and: [{ state: true }]
+    });
 
     resp.json({
-        results: users
+        results: total, users
     });
 }
 
