@@ -18,9 +18,14 @@ const loadFiles = async (req, resp = response) => {
         return;
     }
 
-    const name = await uploadFile(req.files);
+    try {
+        const name = await uploadFile(req.files, ['txt', 'md'], 'myFolder');
+        resp.json({ name });
 
-    resp.json({ name });
+    } catch (msg) {
+        resp.status(400).json({ msg });
+    }
+
 
 
 }
