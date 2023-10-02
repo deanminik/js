@@ -1,5 +1,7 @@
 const { response } = require('express');//To help us with the typing->tipado 
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+
 
 
 const loadFiles = (req, resp = response) => {
@@ -38,21 +40,22 @@ const loadFiles = (req, resp = response) => {
         });
     }
 
-    resp.json({ extensionOfTheFile });
+    // resp.json({ extensionOfTheFile });
 
-
+    const temporalName = uuidv4() + '.' + extensionOfTheFile; 
     // const uploadPath = path.join(__dirname, '../uploads/', file.name);
+    const uploadPath = path.join(__dirname, '../uploads/', temporalName);
 
-    // // Use the mv() method to place the file somewhere on your server
-    // file.mv(uploadPath, (err) => {
-    //     if (err) {
-    //         console.log(err);
-    //         return resp.status(500).json({ err });
-    //     }
+    // Use the mv() method to place the file somewhere on your server
+    file.mv(uploadPath, (err) => {
+        if (err) {
+            console.log(err);
+            return resp.status(500).json({ err });
+        }
 
 
-    //     resp.json({ msg: 'File uploaded!' + uploadPath });
-    // });
+        resp.json({ msg: 'File uploaded!' + uploadPath });
+    });
 }
 
 module.exports = {
