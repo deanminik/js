@@ -46,10 +46,25 @@ const existsProductById = async (id = '') => {
         throw new Error(`The id: ${id} doesn't exist`);
     }
 }
+
+/**
+ * Validate allowed collections
+ */
+
+const allowedCollections = (collection = '', collections = []) => {
+    const included = collections.includes(collection);
+    if (!included) {
+        throw new Error(`This collection ${collection} is not allowed. Here are the allowed collections: ${collections}`);
+    }
+
+    return true;
+}
+
 module.exports = {
     isRoleValid,
     emailExists,
     existsUserById,
     existsCategoryById,
-    existsProductById
+    existsProductById,
+    allowedCollections
 }

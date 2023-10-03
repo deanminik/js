@@ -30,6 +30,13 @@ const loadFiles = async (req, resp = response) => {
 
 }
 
+const updateImage = async (req, resp = response) => {
+    const { id, collection } = req.params;
+
+    resp.json({id, collection})
+}
+
 module.exports = {
-    loadFiles
+    loadFiles,
+    updateImage
 }
