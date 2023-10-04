@@ -8,17 +8,6 @@ const { User, Product } = require('../models');
 
 const loadFiles = async (req, resp = response) => {
 
-
-    if (!req.files || Object.keys(req.files).length === 0) {
-        resp.status(400).json({ msg: 'No files were uploaded.' });
-        return;
-    }
-
-    if (!req.files.file) {
-        resp.status(400).json({ msg: 'No files were uploaded.' });
-        return;
-    }
-
     try {
         const name = await uploadFile(req.files, ['txt', 'md'], 'myFolder');
         resp.json({ name });
@@ -32,6 +21,7 @@ const loadFiles = async (req, resp = response) => {
 }
 
 const updateImage = async (req, resp = response) => {
+
     const { id, collection } = req.params;
     let model;
     //Here we validated the users or products 
@@ -46,7 +36,7 @@ const updateImage = async (req, resp = response) => {
 
             break;
         case 'products':
-            model =  await Product.findById(id);
+            model = await Product.findById(id);
             if (!model) {
                 return resp.status(400).json({
                     msg: `There is not a product with this ID: ${id} `
