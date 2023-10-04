@@ -71,14 +71,49 @@ const updateImage = async (req, resp = response) => {
     resp.json(model);
 }
 
-const showImage = (req, resp = response) => {
-    
-    const { id, collection } = req.params;
+const showImage = async (req, resp = response) => {
 
-    resp.json({
-        id,
-        collection
-    })
+    const { id, collection } = req.params;
+    let model;
+    //Here we validated the users or products 
+    switch (collection) {
+        case 'users':
+            model = await User.findById(id);
+            if (!model) {
+                return resp.status(400).json({
+                    msg: `There is not a user with this ID: ${id} `
+                });
+            }
+
+            break;
+        case 'products':
+            model = await Product.findById(id);
+            if (!model) {
+                return resp.status(400).json({
+                    msg: `There is not a product with this ID: ${id} `
+                });
+            }
+
+            break;
+
+        default:
+            return resp.status(500).json({ msg: 'I forgot to validate this' });
+    }
+
+    // Clean preview images
+    if (model.img) {//See if the property img exists
+        //Delete the image from the server
+        const pathImagen = path.join(__dirname, '../uploads', collection, model.img);//collection -> to see if this is a users directory, products etc
+
+        //If the file exists
+        if (fs.existsSync(pathImagen)) {
+           return resp.sendFile(pathImagen)
+        }
+
+
+    }
+
+  resp.json({msg: 'Hi dev please a default image'});
 };
 
 module.exports = {
