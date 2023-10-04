@@ -54,9 +54,9 @@ const updateImage = async (req, resp = response) => {
     if (model.img) {//See if the property img exists
         //Delete the image from the server
         const pathImagen = path.join(__dirname, '../uploads', collection, model.img);//collection -> to see if this is a users directory, products etc
-        
+
         //If the file exists, then delete it 
-        if(fs.existsSync(pathImagen)){
+        if (fs.existsSync(pathImagen)) {
             fs.unlinkSync(pathImagen);
         }
 
@@ -71,7 +71,18 @@ const updateImage = async (req, resp = response) => {
     resp.json(model);
 }
 
+const showImage = (req, resp = response) => {
+    
+    const { id, collection } = req.params;
+
+    resp.json({
+        id,
+        collection
+    })
+};
+
 module.exports = {
     loadFiles,
-    updateImage
+    updateImage,
+    showImage
 }
