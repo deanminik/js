@@ -4,7 +4,8 @@ const fs = require('fs');//Remember path comes already from Node fs-> File syste
 const { v4: uuidv4 } = require('uuid');
 const { uploadFile } = require('../helpers');
 const { User, Product } = require('../models');
-
+const cloudinary = require('cloudinary').v2
+cloudinary.config(process.env.CLOUDINARY_URL); // process.env.CLOUDINARY_URL ? This came from our .env file
 
 
 const loadFiles = async (req, resp = response) => {
@@ -71,6 +72,55 @@ const updateImage = async (req, resp = response) => {
     resp.json(model);
 }
 
+const updateImageCloudinary = async (req, resp = response) => {
+
+    const { id, collection } = req.params;
+    let model;
+    //Here we validated the users or products 
+    switch (collection) {
+        case 'users':
+            model = await User.findById(id);
+            if (!model) {
+                return resp.status(400).json({
+                    msg: `There is not a user with this ID: ${id} `
+                });
+            }
+
+            break;
+        case 'products':
+            model = await Product.findById(id);
+            if (!model) {
+                return resp.status(400).json({
+                    msg: `There is not a product with this ID: ${id} `
+                });
+            }
+
+            break;
+
+        default:
+            return resp.status(500).json({ msg: 'I forgot to validate this' });
+    }
+
+    // Clean preview images
+    if (model.img) {//See if the property img exists
+        //Delete the image from the cloudinary
+
+
+
+
+
+    }
+    const { tempFilePath } = req.files.file
+    // const res = await cloudinary.uploader.upload(tempFilePath); // ? -> returns a response
+    const {secure_url} = await cloudinary.uploader.upload(tempFilePath); // ? -> returns a response
+
+
+    model.img = secure_url;
+
+    await model.save();
+
+    resp.json(model);
+}
 const showImage = async (req, resp = response) => {
 
     const { id, collection } = req.params;
@@ -121,5 +171,6 @@ const showImage = async (req, resp = response) => {
 module.exports = {
     loadFiles,
     updateImage,
+    updateImageCloudinary,
     showImage
 }

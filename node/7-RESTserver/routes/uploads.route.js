@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validateInputs, validateFileUpload } = require('../middlewares');//I'm calling like this because we have an index file in the middleware directory 
-const { loadFiles, updateImage, showImage } = require('../controllers/uploads.controller');
+const { loadFiles, updateImage, showImage, updateImageCloudinary } = require('../controllers/uploads.controller');
 const { allowedCollections } = require('../helpers');
 
 const router = Router();
@@ -14,13 +14,14 @@ router.put('/:collection/:id', [
     check('id', 'The id should be a Mongo ID').isMongoId(),
     check('collection').custom(c => allowedCollections(c, ['users', 'products'])),
     validateInputs
-], updateImage)
+], updateImageCloudinary);
+// ], updateImage); 
 
 router.get('/:collection/:id', [
     check('id', 'The id should be a Mongo ID').isMongoId(),
     check('collection').custom(c => allowedCollections(c, ['users', 'products'])),
     validateInputs
-],showImage);
+], showImage);
 module.exports = router;
 
 
