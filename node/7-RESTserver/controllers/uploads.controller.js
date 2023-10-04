@@ -107,13 +107,15 @@ const showImage = async (req, resp = response) => {
 
         //If the file exists
         if (fs.existsSync(pathImagen)) {
-           return resp.sendFile(pathImagen)
+            return resp.sendFile(pathImagen)
         }
 
 
     }
 
-  resp.json({msg: 'Hi dev please a default image'});
+    //   resp.json({msg: 'Hi dev please a default image'});
+    const defaultImage = path.join(__dirname, '../assets/no-image.jpg');
+    resp.sendFile(defaultImage);
 };
 
 module.exports = {
