@@ -104,15 +104,16 @@ const updateImageCloudinary = async (req, resp = response) => {
     // Clean preview images
     if (model.img) {//See if the property img exists
         //Delete the image from the cloudinary
-
-
-
+        const nameArr = model.img.split('/');
+        const name = nameArr[nameArr.length - 1];
+        const [public_id] = name.split('.'); // public_id ? came from cloudinary properties
+        cloudinary.uploader.destroy(public_id);
 
 
     }
     const { tempFilePath } = req.files.file
     // const res = await cloudinary.uploader.upload(tempFilePath); // ? -> returns a response
-    const {secure_url} = await cloudinary.uploader.upload(tempFilePath); // ? -> returns a response
+    const { secure_url } = await cloudinary.uploader.upload(tempFilePath); // ? -> returns a response
 
 
     model.img = secure_url;
