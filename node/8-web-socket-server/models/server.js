@@ -56,9 +56,13 @@ class Server {
             
             //Server is hearing clients
             socket.on('send-message', (payload) =>{
-                console.log("Hi! I'm the server and I got the message from a client");
-                console.log("Here is the payload :");
-                console.log(payload);
+                // console.log("Hi! I'm the server and I got the message from a client");
+                // console.log("Here is the payload :");
+                // console.log(payload);
+                
+                //this.io.emit() -> send an event to all connected clients
+                this.io.emit('send-message', payload);
+
             });
 
         });
@@ -75,3 +79,9 @@ class Server {
 
 
 module.exports = Server;
+
+/*
+TERMS:
+on-> listener event to hear clients 
+emit-> to sending event to clients 
+*/

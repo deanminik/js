@@ -10,15 +10,19 @@ const socket_of_a_client = io();
 //on-> the on function is to listen events 
 
 socket_of_a_client.on('connect', () => {
-    console.log("I'm a client and I'm connected");
+    // console.log("I'm a client and I'm connected");
     lblOffline.style.display = 'none';
     lblOnline.style.display = '';
 });
 
 socket_of_a_client.on('disconnect', () => {
-    console.log("I'm a client and I'm disconnected");
+    // console.log("I'm a client and I'm disconnected");
     lblOnline.style.display = 'none';
     lblOffline.style.display = '';
+});
+
+socket_of_a_client.on('send-message', (payload)=>{
+console.log(payload);
 });
 
 btnSend.addEventListener('click', () => {
