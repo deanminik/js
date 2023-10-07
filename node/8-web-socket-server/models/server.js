@@ -9,6 +9,8 @@ class Server {
         //Variables
         this.app = express();
         this.port = process.env.PORT;
+        this.server = require('http').createServer(this.app);
+        this.io = require('socket.io')(this.server); // Here this.io, we keep the all data of my sockets connected 
 
         this.paths = {}
 
@@ -38,7 +40,7 @@ class Server {
 
     //To put our server to listen requests
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log('This server is running in the port', this.port);
         });
     }
