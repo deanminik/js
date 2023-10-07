@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { socketController } = require('../sockets/controller');
 
 /**
  * In our  constructor we have two kind of servers:
@@ -47,30 +48,7 @@ class Server {
 
     sockets() {
         // this.io -> makes reference to our socket server on the line 13
-        this.io.on('connection', socket => {
-            console.log('Client connected', socket.id);
-
-            socket.on('disconnect', () =>{
-                console.log('Client disconnected', socket.id);
-            });
-            
-            //Server is hearing clients
-            socket.on('send-message', (payload, callback) =>{
-                // console.log("Hi! I'm the server and I got the message from a client");
-                // console.log("Here is the payload :");
-                // console.log(payload);
-                
-                //this.io.emit() -> send an event to all connected clients
-                // this.io.emit('send-message', payload);
-
-                const id = 123456;
-                callback(id)
-;
-
-
-            });
-
-        });
+        this.io.on('connection',socketController);
     }
 
     //To put our server to listen requests
