@@ -21,18 +21,20 @@ socket_of_a_client.on('disconnect', () => {
     lblOffline.style.display = '';
 });
 
-socket_of_a_client.on('send-message', (payload)=>{
-console.log(payload);
+socket_of_a_client.on('send-message', (payload) => {
+    console.log(payload);
 });
 
 btnSend.addEventListener('click', () => {
     const message = textMessage.value;
     const payload = {
         message,
-        id:'123abc',
+        id: '123abc',
         date: new Date().getTime()
     }
 
-    socket_of_a_client.emit('send-message', payload);
-    
+    socket_of_a_client.emit('send-message', payload, (id) => {
+        console.log('From the server ', id);
+    });
+
 });
