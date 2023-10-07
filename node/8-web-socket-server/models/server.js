@@ -53,6 +53,13 @@ class Server {
             socket.on('disconnect', () =>{
                 console.log('Client disconnected', socket.id);
             });
+            
+            //Server is hearing clients
+            socket.on('send-message', (payload) =>{
+                console.log("Hi! I'm the server and I got the message from a client");
+                console.log("Here is the payload :");
+                console.log(payload);
+            });
 
         });
     }
