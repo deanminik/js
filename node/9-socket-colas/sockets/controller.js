@@ -5,6 +5,7 @@ const ticketControl = new TicketControl;
 const socketController = (socket) => {
 
     socket.emit('last-ticket', ticketControl.lastTicket); //last-ticket -> name of the event | 
+    socket.emit('current-state', ticketControl.lastFourTickets);
 
     socket.on('next-ticket', (payload, callback) => { //next-ticket -> name of the event 
 
@@ -26,6 +27,11 @@ const socketController = (socket) => {
         }
         //What is the ticket to attend?
         const ticket = ticketControl.attendTicket(desktop);
+
+        //Notify changes in the last 4 tickets 
+        // socket.emit('current-state', ticketControl.lastFourTickets); //This only affect one layout 
+        socket.broadcast.emit('current-state', ticketControl.lastFourTickets);//affect all layout
+
         if (!ticket) {
             callback({
                 ok: false,
