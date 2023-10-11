@@ -1,6 +1,7 @@
 # NPM PACKAGES
 
 Remember execute this command, when there is an app with npm packages already installed 
+But remember you need the package.json 
 
 ```
 npm install
