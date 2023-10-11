@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
 const fileUpload = require('express-fileupload');
+const { socketController } = require('../sockets/controller');
 
 
 class Server {
@@ -9,7 +10,10 @@ class Server {
         //Variables
         this.app = express();
         this.port = process.env.PORT;
-
+        this.server = require('http').createServer(this.app);
+        this.io = require('socket.io')(this.server)
+  
+       
         this.paths = {
             auth: '/api/auth',
             users: '/api/users',
@@ -19,8 +23,7 @@ class Server {
             uploads: '/api/uploads'
         }
 
-        // this.userPath = '/api/users';
-        // this.authPath = '/api/auth';
+       
 
         //Connect to DataBase
         this.connectDB();
@@ -30,6 +33,9 @@ class Server {
 
         //Functions
         this.routes();
+
+        //Sockets
+        this.sockets();
     }
 
     async connectDB() {
@@ -60,15 +66,10 @@ class Server {
         }));
     }
 
-    // routes() {
-    //     this.app.get('/api', (req, res) => {
-    //         res.send('Hello World');//send -> return a html web site 
-    //     })
-    // }
+  
 
     routes() {
-        // this.app.use(this.authPath, require('../routes/auth.route'));
-        // this.app.use(this.userPath, require('../routes/users.route'));
+  
         this.app.use(this.paths.auth, require('../routes/auth.route'));
         this.app.use(this.paths.users, require('../routes/users.route'));
         this.app.use(this.paths.categories, require('../routes/categories.route'));
@@ -79,14 +80,13 @@ class Server {
     }
 
 
-    // routes() {
-    //     this.app.get('/api', (req, res) => {
-    //         res.status(403).json('Hello World');//send -> return a json error 
-    //     })
-    // }
+    sockets() {
+         this.io.on('connection', socketController)
+    }
+
 
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log('This server is running in the port', this.port);
         });
     }
