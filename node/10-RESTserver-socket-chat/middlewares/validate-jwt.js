@@ -41,7 +41,7 @@ const validateJWT = async (req = request, res = response, next) => {
             });
         }
 
-        req.user = user;
+        req.user = user; // From here the user is validated
 
 
         next();//Go with the next middleware | For example this one  check('id', 'Is not a valid ID').isMongoId() etc
