@@ -1,8 +1,6 @@
 const myForm = document.querySelector('form');
 
-const myURL = (window.location.hostname.includes('localhost'))
-    ? 'http://localhost:8079/api/auth/'
-    : '<domain/api/auth/>'
+const myURL = (window.location.hostname.includes('localhost')) ? 'http://localhost:8079/api/auth/' : '<domain/api/auth/>'
 
 
 myForm.addEventListener('submit', e => {
@@ -14,7 +12,8 @@ myForm.addEventListener('submit', e => {
             formData[element.name] = element.value;
         }
     }
-    // console.log(formData); 
+    console.log(formData);
+
     //Send id to our backend
     fetch(myURL + 'login', {
         method: 'POST',
@@ -23,11 +22,12 @@ myForm.addEventListener('submit', e => {
     })
         .then(resp => resp.json())
         .then(data => {
-            // console.log(data);
+            console.log(data);
             if (data.msg) {
                 return console.error(data.msg);
             }
             localStorage.setItem('token', data.token);
+            window.location = 'chat.html';
         })
         .catch(err => {
             console.log(err);
@@ -50,7 +50,7 @@ function handleCredentialResponse(response) {
 
     const body = { id_token: response.credential };//this "response.credential" came from google
 
-    fetch(myURL, {
+    fetch(myURL + 'google', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -63,8 +63,12 @@ function handleCredentialResponse(response) {
             console.log(resp.token);//This is the response from our backend
             localStorage.setItem('email', resp.user.email);
             localStorage.setItem('token', resp.token);
+            // location.reload();
+            window.location = 'chat.html';
+
         })
         .catch(console.warn);
+
 }
 
 const button = document.getElementById('google_signout');

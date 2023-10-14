@@ -23,10 +23,24 @@ const validateJWT = async () => {
 
     const { user: userDB, token: tokenDB } = await resp.json();
     console.log(userDB, tokenDB);
-   
+
     localStorage.setItem('token', tokenDB); //-> this is if you want renovate the token, for example extending its time 
     user = userDB;
+    document.title = user.name;
+
+    await connectSocket();
+
+
 };
+
+const connectSocket = async () => {
+
+    const socket = io({
+        'extraHeaders':{
+            'x-token': localStorage.getItem('token')
+        }
+    });
+}
 
 const main = async () => {
 

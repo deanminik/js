@@ -6,3 +6,8 @@
 *.png
 *.jpg
 *.txt
+
+_auth.bk.js
+_chat.bk.js
+_chat.bk.html
+_index.bk.html

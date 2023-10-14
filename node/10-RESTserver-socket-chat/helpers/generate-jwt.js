@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { User } = require('../models'); //Calling the index
 
 const generateJWT = (uid = '') => {
     return new Promise((resolve, reject) => {
@@ -16,7 +17,7 @@ const generateJWT = (uid = '') => {
                 reject('We could not generate the JWT');
             } else {
                 resolve(token);
-                
+
             }
         });
     });
@@ -25,7 +26,31 @@ const generateJWT = (uid = '') => {
 
 //For more details visit this web site https://www.npmjs.com/package/jsonwebtoken
 
+const checkJWT = async (token = '') => {
+    try {
+        if (token.length < 10) {
+            return null;
+        }
+        //Can we decrypt ? 
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY); // if this works, that the uid exists
+        const user = await User.findById(uid);
 
+        if (user) {
+            if (user.state) {
+                return user;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    } catch (error) {
+        return null;
+
+    }
+}
 module.exports = {
-    generateJWT
+    generateJWT,
+    checkJWT
 }
