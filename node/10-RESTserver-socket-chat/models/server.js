@@ -12,8 +12,8 @@ class Server {
         this.port = process.env.PORT;
         this.server = require('http').createServer(this.app);
         this.io = require('socket.io')(this.server)
-  
-       
+
+
         this.paths = {
             auth: '/api/auth',
             users: '/api/users',
@@ -23,7 +23,7 @@ class Server {
             uploads: '/api/uploads'
         }
 
-       
+
 
         //Connect to DataBase
         this.connectDB();
@@ -66,10 +66,10 @@ class Server {
         }));
     }
 
-  
+
 
     routes() {
-  
+
         this.app.use(this.paths.auth, require('../routes/auth.route'));
         this.app.use(this.paths.users, require('../routes/users.route'));
         this.app.use(this.paths.categories, require('../routes/categories.route'));
@@ -81,7 +81,7 @@ class Server {
 
 
     sockets() {
-         this.io.on('connection', socketController)
+        this.io.on('connection', (socket) => socketController(socket, this.io))
     }
 
 

@@ -60,8 +60,9 @@ const connectSocket = async () => {
         //TODO:
 
     });
-    socket.on('active-users', () => {
+    socket.on('active-users', (payload) => {
         //TODO:
+        console.log(payload);
         
     });
     socket.on('receive-private-message', () => {
