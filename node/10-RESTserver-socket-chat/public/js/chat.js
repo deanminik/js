@@ -60,15 +60,34 @@ const connectSocket = async () => {
         //TODO:
 
     });
-    socket.on('active-users', (payload) => {
-        //TODO:
-        console.log(payload);
-        
-    });
+    // socket.on('active-users', (payload) => {
+    //     //TODO: 
+    //     console.log(payload); //Payload -> List of users connected   
+    // });
+    socket.on('active-users', printUsers);
+
     socket.on('receive-private-message', () => {
         //TODO:
-        
+
     });
+}
+
+const printUsers = (users = []) => {
+    let usersHTML = '';
+    users.forEach(({ name, uid }) => {
+
+        usersHTML += `
+        <li>
+            <p>
+                <h5 class="text-success">${name}</h5>
+                <span class="fs-6 text-muted">${uid}</span>
+            </p>
+        </li>
+        `;
+    });
+    
+    ulUsers.innerHTML = usersHTML;
+
 }
 
 const main = async () => {
