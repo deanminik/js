@@ -7,6 +7,13 @@ const myURL = (window.location.hostname.includes('localhost'))
 let user = null;
 let socket = null;
 
+//REFERENCES 
+const txtUid = document.querySelector('#txtUid');
+const txtMessage = document.querySelector('#txtMessage');
+const ulUsers = document.querySelector('#ulUsers');
+const ulMessages = document.querySelector('#ulMessages');
+const btnExit = document.querySelector('#btnExit');
+
 //validate the token from the local storage 
 const validateJWT = async () => {
 
@@ -35,10 +42,31 @@ const validateJWT = async () => {
 
 const connectSocket = async () => {
 
-    const socket = io({
-        'extraHeaders':{
+    socket = io({
+        'extraHeaders': {
             'x-token': localStorage.getItem('token')
         }
+    });
+
+    socket.on('connect', () => {
+        console.log('Sockets online');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Sockets offline');
+    });
+
+    socket.on('receive-message', () => {
+        //TODO:
+
+    });
+    socket.on('active-users', () => {
+        //TODO:
+        
+    });
+    socket.on('receive-private-message', () => {
+        //TODO:
+        
     });
 }
 
