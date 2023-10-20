@@ -13,17 +13,27 @@ const socketController = async (socket = new Socket, io) => { // = new Socket() 
     if (!user) {
         return socket.disconnect();
     }
-  
+
     console.log(`The user: ${user.name} has connected`);
 
     //Add the user connected
     chatMessages.connectUser(user)
-    io.emit('active-users', chatMessages.usersArray ); //active-users -> /public/js/chat.js
+    io.emit('active-users', chatMessages.usersArray); //active-users -> /public/js/chat.js
 
     //Clean the user disconnected from the array  
-    socket.on('disconnect', () =>{
+    socket.on('disconnect', () => {
         chatMessages.disconnectUser(user.id);
-        io.emit('active-users', chatMessages.usersArray );
+        io.emit('active-users', chatMessages.usersArray);
+    })
+
+    // socket.on('send-message', (payload) =>{
+    //     console.log(payload);
+    // })
+    socket.on('send-message', ({ uid, message }) => {
+        chatMessages.sendMessage(user.id, user.name, message);
+        //Send the message to all 
+        io.emit('receive-message', chatMessages.last10Messages);
+
     })
 
 }

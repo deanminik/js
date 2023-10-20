@@ -56,8 +56,9 @@ const connectSocket = async () => {
         console.log('Sockets offline');
     });
 
-    socket.on('receive-message', () => {
+    socket.on('receive-message', (payload) => {
         //TODO:
+        console.log(payload)
 
     });
     // socket.on('active-users', (payload) => {
@@ -85,10 +86,24 @@ const printUsers = (users = []) => {
         </li>
         `;
     });
-    
+
     ulUsers.innerHTML = usersHTML;
 
 }
+
+txtMessage.addEventListener('keyup', ({ keyCode }) => {
+    const message = txtMessage.value;
+    const uid = txtUid;
+
+    if (keyCode !== 13) { return; }
+    if (message.length === 0) { return; }
+
+    socket.emit('send-message', { message, uid });
+
+    txtMessage.value = '';
+
+
+})
 
 const main = async () => {
 
