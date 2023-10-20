@@ -15,11 +15,17 @@ const socketController = async (socket = new Socket, io) => { // = new Socket() 
     }
 
     console.log(`The user: ${user.name} has connected`);
+    // console.log(user.id);
 
     //Add the user connected
     chatMessages.connectUser(user)
     io.emit('active-users', chatMessages.usersArray); //active-users -> /public/js/chat.js
-    io.emit('receive-message', chatMessages.last10Messages);
+    socket.emit('receive-message', chatMessages.last10Messages);
+
+    //Connect to a room (global, socket.id, user.id)
+    socket.join(user.id);//this (user.id) is a room 
+    // socket.join(user._id.toString());//this (user.id) is a room 
+
 
     //Clean the user disconnected from the array  
     socket.on('disconnect', () => {
@@ -31,9 +37,17 @@ const socketController = async (socket = new Socket, io) => { // = new Socket() 
     //     console.log(payload);
     // })
     socket.on('send-message', ({ uid, message }) => {
-        chatMessages.sendMessage(user.id, user.name, message);
-        //Send the message to all 
-        io.emit('receive-message', chatMessages.last10Messages);
+        if (uid) {
+            //Private message
+            socket.to(uid).emit('receive-private-message', { de: user.name, message }); 
+         
+
+        } else {
+            console.log(uid);
+            chatMessages.sendMessage(user.id, user.name, message);
+            //Send the message to all 
+            io.emit('receive-message', chatMessages.last10Messages);
+        }
 
     })
 

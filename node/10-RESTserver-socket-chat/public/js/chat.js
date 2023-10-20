@@ -69,8 +69,9 @@ const connectSocket = async () => {
     // });
     socket.on('active-users', printUsers);
 
-    socket.on('receive-private-message', () => {
+    socket.on('receive-private-message', (payload) => {
         //TODO:
+        console.log('Private message: ', payload)
 
     });
 }
@@ -114,7 +115,7 @@ const printMessages = (messages = []) => {
 
 txtMessage.addEventListener('keyup', ({ keyCode }) => {
     const message = txtMessage.value;
-    const uid = txtUid;
+    const uid = txtUid.value;
 
     if (keyCode !== 13) { return; }
     if (message.length === 0) { return; }
@@ -132,6 +133,7 @@ const main = async () => {
     await validateJWT();
 
 }
+
 
 main();
 
