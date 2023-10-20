@@ -56,11 +56,13 @@ const connectSocket = async () => {
         console.log('Sockets offline');
     });
 
-    socket.on('receive-message', (payload) => {
-        //TODO:
-        console.log(payload)
+    // socket.on('receive-message', (payload) => {
+    //     //TODO:
+    //     console.log(payload)
 
-    });
+    // });
+    socket.on('receive-message', printMessages); // Doing in this way is the same when we are adding "payload" as an argument
+
     // socket.on('active-users', (payload) => {
     //     //TODO: 
     //     console.log(payload); //Payload -> List of users connected   
@@ -88,6 +90,25 @@ const printUsers = (users = []) => {
     });
 
     ulUsers.innerHTML = usersHTML;
+
+}
+
+
+const printMessages = (messages = []) => {
+    let messagesHTML = '';
+    messages.forEach(({ name, message }) => {
+
+        messagesHTML += `
+        <li>
+            <p>
+                <span class="text-primary">${name}:</span>
+                <span>${message}</span>
+            </p>
+        </li>
+        `;
+    });
+
+    ulMessages.innerHTML = messagesHTML;
 
 }
 

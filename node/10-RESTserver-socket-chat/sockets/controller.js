@@ -19,6 +19,7 @@ const socketController = async (socket = new Socket, io) => { // = new Socket() 
     //Add the user connected
     chatMessages.connectUser(user)
     io.emit('active-users', chatMessages.usersArray); //active-users -> /public/js/chat.js
+    io.emit('receive-message', chatMessages.last10Messages);
 
     //Clean the user disconnected from the array  
     socket.on('disconnect', () => {
