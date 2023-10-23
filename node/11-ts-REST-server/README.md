@@ -101,3 +101,45 @@ and
 ```
 node dist/app.js 
 ```
+
+## Install express | cors | dotenv
+
+```
+npm i express cors dotenv
+```
+
+
+## Run project
+
+First, compile the ts files to the js version, this is to read ts files and add the changes to the app.js file 
+Open a different terminal
+
+```
+tsc --watch
+```
+
+Then go to de dist directory and run nodemon app
+
+```
+nodemon dist/app.js
+```
+
+
+## There is another option if you want to run just one command 
+
+Install this package 
+
+```
+npm install -g concurrently
+```
+Then go to the package.json and add this script 
+
+"dev": "concurrently --kill-others \"tsc -w\" \"nodemon dist/app.js\""
+
+Finally open the terminal and run this command
+
+```
+npm run dev
+```
+
+If you get the error like the port is taken, just close the terminal and open a new one 
