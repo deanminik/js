@@ -73,11 +73,13 @@ Create tslint config file, so we need to point to node_modules/.bin/tslint
 
 ```
 ./node_modules/.bin/tslint --init
+```
 
 So open the file, and we are going to add the rule of do not show me errors when I use the console terminal 
    "no-console": false
 
 Like this:
+
 ```
 {
     "defaultSeverity": "error",
