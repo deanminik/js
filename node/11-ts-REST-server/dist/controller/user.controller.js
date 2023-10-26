@@ -92,12 +92,23 @@ const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.putUser = putUser;
-const deleteUser = (req, res) => {
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    res.json({
-        msg: 'deleteUser',
-        id
-    });
-};
+    const user = yield user_1.default.findByPk(id);
+    if (!user) {
+        return res.status(404).json({
+            msg: 'There is not user with this ID ' + id
+        });
+    }
+    // res.json({
+    //     msg: 'deleteUser',
+    //     id
+    // });
+    //DELETE A REGISTER PHYSICALLY 
+    //   await user.destroy();
+    //DELETE A REGISTER LOGICALLY -> THis is the recommended way 
+    yield user.update({ state: false });
+    res.json(user);
+});
 exports.deleteUser = deleteUser;
 //# sourceMappingURL=user.controller.js.map

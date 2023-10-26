@@ -97,12 +97,30 @@ export const putUser = async (req: Request, res: Response) => {
 }
 
 
-export const deleteUser = (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    res.json({
-        msg: 'deleteUser',
-        id
-    });
+    const user = await User.findByPk(id);
+    if (!user) {
+        return res.status(404).json({
+            msg: 'There is not user with this ID ' + id
+        });
+    }
+
+    // res.json({
+    //     msg: 'deleteUser',
+    //     id
+    // });
+
+
+      //DELETE A REGISTER PHYSICALLY 
+    //   await user.destroy();
+      
+    //DELETE A REGISTER LOGICALLY -> THis is the recommended way 
+    await user.update({state:false});
+
+
+      res.json(user);
+
 }
