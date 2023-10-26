@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import userRoutes from '../routes/user.route';
 import cors from 'cors';
+import db from '../db/connection';
 
 class Server {
 
@@ -13,13 +14,26 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || '8001';
-        
+
+        this.dbConnection();
+
         this.middlewares();
-  
+
         this.routes();
 
     }
-    middlewares(){
+    async dbConnection() {
+        try {
+            await db.authenticate();
+            console.log('Database online');
+
+        } catch (error:any) {
+            console.error('Unable to connect to the database:', error);
+            throw new Error('Database connection failed');
+       
+        }
+    }
+    middlewares() {
         //Just functions before to executes our routes 
 
         //CORS:
@@ -27,7 +41,7 @@ class Server {
 
         //Parse the body to read it
         this.app.use(express.json()); //So with this, express parse for me, the body when we send in the request post, put, delete etc 
-        
+
 
         //Public directory -> To share static content Example: web site 
         this.app.use(express.static('public')) //public -> /11-ts-REST-server/public/
@@ -36,7 +50,7 @@ class Server {
 
     }
 
-    routes(){
+    routes() {
         this.app.use(this.apiPaths.users, userRoutes);
     }
 
