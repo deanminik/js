@@ -66,16 +66,34 @@ export const postUser = async (req: Request, res: Response) => {
     }
 }
 
-export const putUser = (req: Request, res: Response) => {
+export const putUser = async (req: Request, res: Response) => {
 
     const { id } = req.params;
     const { body } = req;
 
-    res.json({
-        msg: 'putUser',
-        body,
-        id
-    });
+    // res.json({
+    //     msg: 'putUser',
+    //     body,
+    //     id
+    // });
+    try {
+        const user = await User.findByPk(id);
+        if (!user) {
+            return res.status(404).json({
+                msg: 'There is not user with this ID ' + id
+            });
+        }
+
+        await user.update(body);
+
+        res.json(user);
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Talk with the Admin',
+        });
+    }
 }
 
 
