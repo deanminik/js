@@ -13,14 +13,24 @@ export const getUsers = async (req: Request, res: Response) => {
 }
 
 
-export const getUser = (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    res.json({
-        msg: 'getUser',
-        id
-    });
+    const user = await User.findByPk(id);
+
+    // res.json({
+    //     msg: 'getUser',
+    //     id
+    // });
+
+    if (!user) {
+        return res.status(404).json({
+            msg:`The user with the ID: ${id} doesn't exists`
+        });
+    }
+
+    res.json(user);
 }
 
 export const postUser = (req: Request, res: Response) => {

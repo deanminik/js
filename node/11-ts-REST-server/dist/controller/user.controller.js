@@ -22,13 +22,20 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.json(users);
 });
 exports.getUsers = getUsers;
-const getUser = (req, res) => {
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    res.json({
-        msg: 'getUser',
-        id
-    });
-};
+    const user = yield user_1.default.findByPk(id);
+    // res.json({
+    //     msg: 'getUser',
+    //     id
+    // });
+    if (!user) {
+        return res.status(404).json({
+            msg: `The user with the ID: ${id} doesn't exists`
+        });
+    }
+    res.json(user);
+});
 exports.getUser = getUser;
 const postUser = (req, res) => {
     const { body } = req;
