@@ -37,13 +37,34 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.json(user);
 });
 exports.getUser = getUser;
-const postUser = (req, res) => {
+const postUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    res.json({
-        msg: 'postUser',
-        body
-    });
-};
+    // res.json({
+    //     msg: 'postUser',
+    //     body
+    // });
+    try {
+        const existsEmail = yield user_1.default.findOne({
+            where: {
+                email: body.email
+            }
+        });
+        if (existsEmail) {
+            return res.status(400).json({
+                msg: 'There is an user with this email: ' + body.email
+            });
+        }
+        const user = new user_1.default(body);
+        yield user.save();
+        res.json(user);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Talk with the Admin',
+        });
+    }
+});
 exports.postUser = postUser;
 const putUser = (req, res) => {
     const { id } = req.params;

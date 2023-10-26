@@ -26,21 +26,44 @@ export const getUser = async (req: Request, res: Response) => {
 
     if (!user) {
         return res.status(404).json({
-            msg:`The user with the ID: ${id} doesn't exists`
+            msg: `The user with the ID: ${id} doesn't exists`
         });
     }
 
     res.json(user);
 }
 
-export const postUser = (req: Request, res: Response) => {
+export const postUser = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    res.json({
-        msg: 'postUser',
-        body
-    });
+    // res.json({
+    //     msg: 'postUser',
+    //     body
+    // });
+    try {
+        const existsEmail = await User.findOne({
+            where: {
+                email: body.email
+            }
+        });
+        if (existsEmail) {
+            return res.status(400).json({
+                msg: 'There is an user with this email: ' + body.email
+            });
+        }
+
+        const user = new User(body);
+        await user.save();
+
+        res.json(user);
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Talk with the Admin',
+        });
+    }
 }
 
 export const putUser = (req: Request, res: Response) => {
