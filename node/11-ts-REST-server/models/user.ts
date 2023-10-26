@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize"; // Similar to mongoose
 import db from "../db/connection";
 
-const User = db.define('User',{
+const User = db.define('users',{
     name:{
         type:DataTypes.STRING
     },
