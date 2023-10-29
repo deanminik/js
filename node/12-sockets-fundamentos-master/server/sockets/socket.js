@@ -14,13 +14,22 @@ io.on('connection', (client) => {
         }
         let persons = users.addPerson(client.id, data.name);
         // console.log(user); //Every time the page is loaded or someone open that windows, you'll see the user on the terminal of the server, not the terminal of the browser 
+        
+        client.broadcast.emit('personList', users.getAllPersons());
 
-          callback(persons); //This show me the persons connected to the chat -> browser terminal
+        callback(persons); //This show me the persons connected to the chat -> browser terminal
         //   console.log( callback ); 
     });
     //This "joinChat" cam from  /12-sockets-fundamentos-master/public/js/socket-chat.js
 
+     client.on('disconnect', () =>{
+        let deletedPerson = users.deletePerson(client.id);
 
+        client.broadcast.emit('createMessage',{user: 'Admin', message: `${deletedPerson.name} left the room chat `}); 
+        //broadcast -> to inform all users
+        //createMessage -> This is an event, so the idea is that every client is listening this event, so go here /public/js/socket-chat.js
+        client.broadcast.emit('personList', users.getAllPersons());
+     })
 });
 
 

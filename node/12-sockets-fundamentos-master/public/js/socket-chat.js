@@ -40,8 +40,15 @@ socket.emit('sendMessage', {
 });
 
 // Listen for information
-socket.on('sendMessage', function (message) {
+socket.on('createMessage', function (message) {
 
     console.log('Server:', message);
+
+});
+
+//Listen when an user join or left the chat 
+socket.on('personList', function (persons) {
+
+    console.log('Server:', persons);
 
 });
