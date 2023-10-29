@@ -32,12 +32,12 @@ socket.on('disconnect', function () {
 
 
 // Send information
-socket.emit('sendMessage', {
-    user: 'Fernando',
-    message: 'Hello World'
-}, function (resp) {
-    console.log('server response: ', resp);
-});
+// socket.emit('createMessage', {
+//     user: 'Fernando',
+//     message: 'Hello World'
+// }, function (resp) {
+//     console.log('server response: ', resp);
+// });
 
 // Listen for information
 socket.on('createMessage', function (message) {
@@ -52,3 +52,7 @@ socket.on('personList', function (persons) {
     console.log('Server:', persons);
 
 });
+
+
+// emit = diffusion
+// on = listen
