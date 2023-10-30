@@ -22,3 +22,15 @@ function renderUsers(persons) {
 
 
 }
+
+//Listeners
+divUsuarios.on('click', 'a', function () {
+    // id -> came from this data-id in the line 17 
+
+    var id = $(this).data('id');
+    
+    if (id) {
+        console.log(id);
+    }
+
+});
