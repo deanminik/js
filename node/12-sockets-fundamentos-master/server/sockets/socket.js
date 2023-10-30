@@ -8,13 +8,16 @@ const users = new Users();
 io.on('connection', (client) => {
 
     client.on('joinChat', (data, callback) => {
-        if (!data.name) {
+        console.log(data);
+        if (!data.name || !data.room) {
             return callback({
                 error: true,
-                message: 'The name ir required'
+                message: 'The name and room are required'
             });
         }
-        let persons = users.addPerson(client.id, data.name);
+        client.join(data.room);
+
+        let persons = users.addPerson(client.id, data.name, data.room);
         // console.log(user); //Every time the page is loaded or someone open that windows, you'll see the user on the terminal of the server, not the terminal of the browser 
 
         client.broadcast.emit('personList', users.getAllPersons());
