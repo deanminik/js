@@ -38,7 +38,14 @@ io.on('connection', (client) => {
         //broadcast -> to inform all users
         //createMessage -> This is an event, so the idea is that every client is listening this event, so go here /public/js/socket-chat.js
         client.broadcast.emit('personList', users.getAllPersons());
-    })
+    });
+
+    //Private Messages
+    client.on('privateMessage', data => {
+        let person = users.getPerson(client.id);
+        client.broadcast.to(data.para).emit('privateMessage', createMessage(person.name, data.message));
+    });
+
 });
 
 

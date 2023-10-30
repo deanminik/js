@@ -53,6 +53,11 @@ socket.on('personList', function (persons) {
 
 });
 
+//Private messages
+socket.on('privateMessage', function(message){
+   console.log('Private message: ', message);
+});
+
 
 // emit = diffusion
 // on = listen
