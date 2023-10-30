@@ -31,22 +31,40 @@ function renderUsers(persons) {
 
 }
 
-function renderMessages(message) {
+function renderMessages(message, me) {
 
     console.log('Here is the message', message);
     var html = '';
 
-    
+    var adminClass = 'info';
+    if (message.name === 'Admin') {
+        adminClass = 'danger';
+    }
 
-    html += '<li class="animated fadeIn">';
-    html += '   <div class="chat-img"><img src="assets/images/users/3.jpg" alt="user" />';
-    html += '</div>';
-    html += '<div class="chat-content">';
-    html += '<h5>' + message.name + '</h5>';
-    html += '<div class="box bg-light-info">' + message.message + '</div>';
-    html += '</div>';
-    html += '   <div class="chat-time">11:00 am</div>';
-    html += '</li>';
+    if (me) {
+        html += '<li li class="reverse" >';
+        html += '<div class="chat-content">';
+        html += '<h5>' + message.name + '</h5>';
+        html += '<div class="box bg-light-inverse">' + message.message + '</div>';
+        html += '</div>';
+        html += '<div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" />   </div>';
+        html += '<div class="chat-time">10:57 am</div>';
+        html += '</li >';
+    } else {
+        html += '<li class="animated fadeIn">';
+        html += '   <div class="chat-img"><img src="assets/images/users/3.jpg" alt="user" />';
+        html += '</div>';
+        html += '<div class="chat-content">';
+        html += '<h5>' + message.name + '</h5>';
+        html += '<div class="box bg-light-' + adminClass + '">' + message.message + '</div>';
+        html += '</div>';
+        html += '   <div class="chat-time">11:00 am</div>';
+        html += '</li>';
+    }
+
+
+
+
 
     divChatbox.append(html);
 }
@@ -80,7 +98,7 @@ formSend.on('submit', function (e) {
     }, function (resp) {
         console.log('server response: ', resp);
         txtMessage.val('').focus();
-        renderMessages(resp);
+        renderMessages(resp, true);
     });
 
 });

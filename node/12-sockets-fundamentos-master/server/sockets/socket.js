@@ -23,7 +23,7 @@ io.on('connection', (client) => {
         // client.broadcast.emit('personList', users.getAllPersons()); //-> This is emitting messages to everybody globally 
 
         client.broadcast.to(data.room).emit('personList', users.getPersonsByRoom(data.room)); //-> This is emitting messages to everybody globally 
-
+        client.broadcast.to(data.room).emit('createMessage', createMessage('Admin', `${data.name} joined`));
         callback(users.getPersonsByRoom(data.room)); //This show me the persons connected to the chat -> browser terminal
         //   console.log( callback ); 
     });
