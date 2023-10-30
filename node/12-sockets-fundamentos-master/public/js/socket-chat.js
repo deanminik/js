@@ -18,6 +18,7 @@ socket.on('connect', function () {
 
     socket.emit('joinChat', user, function(resp){
         console.log('Users, connected: ', resp);
+        renderUsers(resp);
 
     }); //This "emit('joinChat'" emits the message, and the server will know who I am 
     // We'll use this "joinChat" here /12-sockets-fundamentos-master/server/sockets/socket.js
@@ -51,6 +52,7 @@ socket.on('createMessage', function (message) {
 socket.on('personList', function (persons) {
 
     console.log('Server:', persons);
+    renderUsers(resp);
 
 });
 
