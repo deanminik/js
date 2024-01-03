@@ -1,7 +1,10 @@
-import {Hero} from './classes/Hero';
+import { printObject, genericFunction } from "../generics /generics";
 
-const ironman = new Hero('Iroman', 1, 55);
+// printObject(123);
+// printObject(new Date());
+// printObject({a:1,b:2});
+// printObject([1,2,3]);
 
-console.log(ironman);
-
-
+console.log(genericFunction(3.145).toFixed(2))
+console.log(genericFunction('Hola mundo').toFixed(2))
+console.log(genericFunction(3.145).toFixed(2))
